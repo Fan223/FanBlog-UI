@@ -1,23 +1,24 @@
 <template>
-  <el-container>
-    <el-aside width="{asideWidth: '200px'}">
-      <NavAside></NavAside>
+  <el-container class="layout">
+    <el-aside width="auto">
+      <NavAside />
     </el-aside>
+
     <el-container>
       <el-header>
-        <NavHeader></NavHeader>
+        <NavHeader />
       </el-header>
+
       <el-main>
-        <router-view style="padding: 0 20px 0 20px"></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-import NavAside from '@/layout/NavAside.vue'
-import NavHeader from '@/layout/NavHeader.vue'
-// import Tabs from '@/layout/Tabs.vue'
+import NavAside from './NavAside.vue'
+import NavHeader from './NavHeader.vue'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -25,20 +26,22 @@ export default {
   components: {
     NavAside,
     NavHeader
-  },
-}
+  }
+};
 </script>
 
-<style>
-.el-header {
-  background-color: #333;
-  color: #fff;
+<style scoped>
+.layout {
+  width: 100%;
+  height: 100vh;
 }
 .el-aside {
+  background-color: #35363a;
+}
+.el-header {
   background-color: #545c64;
 }
 .el-main {
-  background-color: #f3f3f4;
-  padding: 0;
+  background-color: #ccc;
 }
 </style>

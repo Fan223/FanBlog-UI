@@ -1,5 +1,4 @@
 // 该文件用于创建 Vuex 中最为核心的 store
-
 // 引入 Vue
 import Vue from 'vue'
 // 引入 Vuex
@@ -10,9 +9,15 @@ Vue.use(Vuex)
 // 准备 actions——用于响应组件中的动作
 const actions = {}
 // 准备 mutations——用于操作数据（state）
-const mutations = {}
+const mutations = {
+  HANDLE_COLLAPSE(state){
+    state.isCollapse = !state.isCollapse
+  },
+}
 // 准备state——用于存储数据
-const state = {}
+const state = {
+  isCollapse: false,
+}
 // 准备getters——用于将state中的数据进行加工
 const getters = {}
 

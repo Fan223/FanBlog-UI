@@ -15,6 +15,18 @@ export default new VueRouter({
       path: '/',
       name: 'Main',
       component: () => import('@/layout/Main.vue'),
-    }
+      children: [
+        {
+          path: '/home',
+          name: 'Home',
+          component: () => import('@/views/Home.vue'),
+        },
+        {
+          path: '/menu',
+          name: 'Menu',
+          component: () => import('@/views/menu/Menu.vue'),
+        }
+      ]
+    },
   ]
 })

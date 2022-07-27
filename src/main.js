@@ -2,7 +2,8 @@
 import Vue from 'vue'
 // 引入 App 组件
 import App from './App.vue'
-// 引入 store
+// 引入 store，假如 store 文件夹下为 index.js，则默认会去找，可以不写
+// import store from './store/index'
 import store from './store'
 // 引入 VueRouter
 import VueRouter from 'vue-router'
