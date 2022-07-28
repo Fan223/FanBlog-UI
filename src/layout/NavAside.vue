@@ -39,4 +39,7 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }
+a {
+  text-decoration: none;
+}
 </style>

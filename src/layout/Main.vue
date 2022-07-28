@@ -42,6 +42,7 @@ export default {
   background-color: #545c64;
 }
 .el-main {
-  background-color: #ccc;
+  /*background-color: #ccc;*/
+  /*padding: 0;*/
 }
 </style>
