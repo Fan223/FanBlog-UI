@@ -67,12 +67,12 @@
           width="120"
           align="center">
       </el-table-column>
-      <!--    <el-table-column-->
-      <!--        prop="createTime"-->
-      <!--        label="创建时间"-->
-      <!--        width="120"-->
-      <!--        align="center">-->
-      <!--    </el-table-column>-->
+          <el-table-column
+              prop="createTimeVO"
+              label="创建时间"
+              width="120"
+              align="center">
+          </el-table-column>
     </el-table>
   </div>
 
@@ -92,7 +92,6 @@ export default {
   },
   methods: {
     handleSelectionChange(val) {
-      console.log(val);
       this.multipleSelection = val;
     },
     getMenuTree() {
@@ -105,6 +104,9 @@ export default {
         path: '/menu/addMenu'
       });
     }
+  },
+  mounted() {
+    this.getMenuTree();
   },
   created() {
     this.getMenuTree();

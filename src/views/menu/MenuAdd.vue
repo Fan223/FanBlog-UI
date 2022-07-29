@@ -5,13 +5,13 @@
       width="80%">
     <el-form ref="addMenuForm" :model="addMenuForm" label-width="80px">
       <el-form-item label="上级菜单">
-        <el-select v-model="addMenuForm.parentId" placeholder="请选择上级菜单">
-          <el-option :value="addMenuForm.parentId" style="height: auto">
+        <el-select v-model="addMenuForm.parentName" clearable placeholder="请选择上级菜单">
+          <el-option :value="addMenuForm.parentName" style="height: auto">
             <el-tree
                 :data="menuList"
                 :props="defaultProps"
-                show-checkbox
-                node-key="id"
+                node-key="menuName"
+                check-strictly
                 :default-expand-all="true"
                 @node-click="handleNodeClick">
             </el-tree>
@@ -46,7 +46,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="addMenu()">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -64,6 +64,7 @@ export default {
       },
       addMenuForm: {
         parentId: "",
+        parentName: "",
         menuName: "",
         path: "",
         permission: "",
@@ -76,17 +77,31 @@ export default {
   },
   methods: {
     addMenu() {
-
+      this.$axios.post("/fanBlog/menu/addMenu", this.addMenuForm).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "添加成功",
+            type: "success"
+          });
+          this.dialogVisible = false;
+        } else {
+          this.$message({
+            message: res.data.msg,
+            type: "error"
+          });
+        }
+      });
     },
     handleNodeClick(data) {
-      this.addMenuForm.parentId = data.id;
+      this.addMenuForm.parentId = data.menuId;
+      this.addMenuForm.parentName = data.menuName;
+      console.log(this.addMenuForm)
     },
   },
   created() {
     this.$bus.$on('addMenu', menuList => {
       this.dialogVisible = true;
       this.menuList = menuList;
-      console.log(this.menuList);
     });
   }
 }
