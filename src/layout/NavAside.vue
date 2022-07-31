@@ -1,36 +1,67 @@
 <template>
   <el-menu
-    default-active="1-1"
-    class="el-menu-vertical-demo"
-    :collapse="this.$store.state.isCollapse"
-    :collapse-transition="false"
-    background-color="#35363a"
-    text-color="#fff"
-    active-text-color="#ffd04b"
+      default-active="1-1"
+      class="el-menu-vertical-demo"
+      :collapse="this.$store.state.isCollapse"
+      :collapse-transition="false"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
   >
+    <!--    <router-link to="/home">-->
+    <!--      <el-menu-item index="title">-->
+    <!--        <i class='el-icon-menu'></i>-->
+    <!--        <span slot="title"> 个人博客 </span>-->
+    <!--      </el-menu-item>-->
+    <!--    </router-link>-->
+    <el-menu-item index="title" @click="$router.go(0)"
+    >
+      <i class="el-icon-menu" v-show="!$store.state.isCollapse"></i>
+      <span slot="title"> <b>个人博客</b> </span>
+    </el-menu-item>
+
     <router-link to="/home">
       <el-menu-item index="Home">
         <i class='el-icon-s-home'></i>
         <span slot="title"> 首页 </span>
       </el-menu-item>
     </router-link>
-    <router-link to="/menu">
-      <el-menu-item index="Menu">
-        <i class='el-icon-menu'></i>
-        <span slot="title"> 菜单管理 </span>
-      </el-menu-item>
-    </router-link>
+
+    <template v-for="menu in menuList">
+      <el-submenu v-if="menu.children && menu.children.length > 0"
+        :key="menu.menuId"
+        :index="menu.menuId">
+        <template slot="title">
+          <i :class=menu.icon></i>
+          <span slot="title"> {{ menu.menuName }} </span>
+        </template>
+        <template v-for="child in menu.children">
+          <router-link :to="child.path" :key="child.menuId">
+            <el-menu-item :index="child.path">
+              <i :class=child.icon></i>
+              <span slot="title"> {{ child.menuName }} </span>
+            </el-menu-item>
+          </router-link>
+        </template>
+      </el-submenu>
+
+      <router-link v-else :to="menu.path" :key="menu.menuId">
+        <el-menu-item :index="menu.path">
+          <i :class=menu.icon></i>
+          <span slot="title"> {{ menu.menuName }} </span>
+        </el-menu-item>
+      </router-link>
+    </template>
   </el-menu>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-    };
-  },
-  methods: {
-
+  name: 'NavAside',
+  computed: {
+    menuList() {
+      return this.$store.state.menuList;
+    }
   }
 }
 </script>
@@ -39,6 +70,7 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }
+
 a {
   text-decoration: none;
 }

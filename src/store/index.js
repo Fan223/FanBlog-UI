@@ -13,10 +13,18 @@ const mutations = {
   HANDLE_COLLAPSE(state){
     state.isCollapse = !state.isCollapse
   },
+  SET_MENU_LIST(state, menuList){
+    state.menuList = menuList
+  },
+  CHANGE_ROUTE_STATUS(state, hasRoute){
+    state.hasRoute = hasRoute
+  }
 }
 // 准备state——用于存储数据
 const state = {
   isCollapse: false,
+  hasRoute: false,
+  menuList: []
 }
 // 准备getters——用于将state中的数据进行加工
 const getters = {}

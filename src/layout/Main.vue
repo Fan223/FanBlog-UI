@@ -36,13 +36,13 @@ export default {
   height: 100vh;
 }
 .el-aside {
-  background-color: #35363a;
-}
-.el-header {
   background-color: #545c64;
 }
+.el-header {
+  background-color: #35363a;
+  padding: 0;
+}
 .el-main {
-  /*background-color: #ccc;*/
-  /*padding: 0;*/
+  padding: 30px;
 }
 </style>

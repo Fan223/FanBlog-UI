@@ -1,14 +1,15 @@
 <template>
   <el-dialog
-      title="新增菜单"
+      title="修改菜单"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
+      @close="resetForm"
       width="50%"
-      class="addMenu-dialog">
-    <el-form :model="addMenuForm" ref="addMenuForm" label-width="80px" style="margin-top: -20px">
+      class="editMenu-dialog">
+    <el-form ref="editMenuForm" :model="editMenuForm" label-width="80px" style="margin-top: -20px">
       <el-form-item label="上级菜单" prop="parentName">
-        <el-select v-model="addMenuForm.parentName" clearable placeholder="请选择上级菜单">
-          <el-option :value="addMenuForm.parentName" style="height: auto">
+        <el-select v-model="editMenuForm.parentName" clearable placeholder="请选择上级菜单">
+          <el-option :value="editMenuForm.parentName" style="height: auto">
             <el-tree
                 :data="menuList"
                 :props="defaultProps"
@@ -21,44 +22,44 @@
         </el-select>
       </el-form-item>
       <el-form-item label="菜单名称" prop="menuName">
-        <el-input v-model="addMenuForm.menuName" placeholder="请输入菜单名称"></el-input>
+        <el-input v-model="editMenuForm.menuName" placeholder="请输入菜单名称"></el-input>
       </el-form-item>
       <el-form-item label="菜单路径" prop="path">
-        <el-input v-model="addMenuForm.path" placeholder="请输入菜单路径"></el-input>
+        <el-input v-model="editMenuForm.path" placeholder="请输入菜单路径"></el-input>
       </el-form-item>
       <el-form-item label="权限编码" prop="permission">
-        <el-input v-model="addMenuForm.permission" placeholder="请输入权限编码"></el-input>
+        <el-input v-model="editMenuForm.permission" placeholder="请输入权限编码"></el-input>
       </el-form-item>
       <el-form-item label="组件名称" prop="component">
-        <el-input v-model="addMenuForm.component" placeholder="请输入组件名称"></el-input>
+        <el-input v-model="editMenuForm.component" placeholder="请输入组件名称"></el-input>
       </el-form-item>
       <el-form-item label="菜单类型" prop="type">
-        <el-radio-group v-model="addMenuForm.type">
+        <el-radio-group v-model="editMenuForm.type">
           <el-radio :label="1">目录</el-radio>
           <el-radio :label="2">菜单</el-radio>
           <el-radio :label="3">按钮</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="菜单图标" prop="icon">
-        <el-input v-model="addMenuForm.icon" placeholder="请输入菜单图标"></el-input>
+        <el-input v-model="editMenuForm.icon" placeholder="请输入菜单图标"></el-input>
       </el-form-item>
       <el-form-item label="排序号" prop="orderNum">
         <el-input-number
-            v-model="addMenuForm.orderNum"
+            v-model="editMenuForm.orderNum"
             :min="1">
         </el-input-number>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="resetForm">取 消</el-button>
-      <el-button type="primary" @click="addMenu">确 定</el-button>
-    </span>
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="editMenu">确 定</el-button>
+  </span>
   </el-dialog>
 </template>
 
 <script>
 export default {
-  name: 'MenuAdd',
+  name: 'MenuEdit',
   data() {
     return {
       dialogVisible: false,
@@ -67,28 +68,18 @@ export default {
         children: 'children',
         label: 'menuName',
       },
-      addMenuForm: {
-        parentId: "",
-        parentName: "",
-        menuName: "",
-        path: "",
-        permission: "",
-        component: "",
-        type: 1,
-        icon: "",
-        orderNum: 1,
-      },
+      editMenuForm: {},
     }
   },
   methods: {
-    addMenu() {
-      this.$axios.post("/fanBlog/menu/addMenu", this.addMenuForm).then(res => {
+    editMenu() {
+      this.$axios.put("/fanBlog/menu/editMenu", this.editMenuForm).then(res => {
         if (res.data.code == 200) {
           this.$message({
-            message: "添加成功",
+            message: "修改成功",
             type: "success"
           });
-          this.$bus.$emit("refreshMenuList");
+          this.$bus.$emit('refreshMenuList');
           this.dialogVisible = false;
         } else {
           this.$message({
@@ -99,17 +90,17 @@ export default {
       });
     },
     handleNodeClick(data) {
-      this.addMenuForm.parentId = data.menuId;
-      this.addMenuForm.parentName = data.menuName;
+      this.editMenuForm.parentId = data.menuId;
+      this.editMenuForm.parentName = data.menuName;
     },
     resetForm() {
-      this.$refs['addMenuForm'].resetFields();
-      this.dialogVisible = false;
+      this.$refs['editMenuForm'].resetFields();
     },
   },
   created() {
-    this.$bus.$on('addMenu', menuList => {
+    this.$bus.$on('editMenu', (row, menuList) => {
       this.dialogVisible = true;
+      this.editMenuForm = JSON.parse(JSON.stringify(row));
       this.menuList = menuList;
     });
   }
@@ -117,15 +108,13 @@ export default {
 </script>
 
 <style scoped>
-.addMenu-dialog {
+.editMenu-dialog {
   margin-top: -5%;
 }
-
 .el-form {
   width: 80%;
   margin: 0 auto;
 }
-
 .el-form-item {
   margin: 20px auto;
 }
