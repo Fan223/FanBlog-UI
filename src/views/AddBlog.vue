@@ -29,7 +29,6 @@
           <el-form-item prop="content">
             <Vditor ref="markdownEditor" v-model="editForm.content"></Vditor>
           </el-form-item>
-<!--          <el-button @click="save">保存</el-button>-->
         </el-form>
       </el-col>
     </el-row>
@@ -37,6 +36,7 @@
 </template>
 
 <script>
+import "@/assets/js/vditor.js"
 import Vditor from "@/components/Vditor"
 
 export default {
@@ -58,9 +58,6 @@ export default {
     }
   },
   methods: {
-    save() {
-      this.editForm.content = this.$refs.markdownEditor.getValue();
-    },
     addBlog() {
       this.$axios.post('/fanBlog/blog/addBlog', this.editForm).then(res => {
         if (res.data.code == 200) {
@@ -81,6 +78,11 @@ export default {
   components: {
     Vditor
   },
+  mounted() {
+    this.$bus.$on('save', () => {
+      this.editForm.content = this.$refs.markdownEditor.getValue();
+    })
+  }
 }
 </script>
 
