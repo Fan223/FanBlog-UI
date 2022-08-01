@@ -17,7 +17,7 @@
     <el-menu-item index="title" @click="$router.go(0)"
     >
       <i class="el-icon-menu" v-show="!$store.state.isCollapse"></i>
-      <span slot="title"> <b>个人博客</b> </span>
+      <span slot="title"> <b> FanBlog</b> </span>
     </el-menu-item>
 
     <router-link to="/home">

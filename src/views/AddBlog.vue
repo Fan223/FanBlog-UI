@@ -29,7 +29,7 @@
           <el-form-item prop="content">
             <Vditor ref="markdownEditor" v-model="editForm.content"></Vditor>
           </el-form-item>
-          <el-button @click="save">保存</el-button>
+<!--          <el-button @click="save">保存</el-button>-->
         </el-form>
       </el-col>
     </el-row>
