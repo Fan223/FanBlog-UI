@@ -20,28 +20,6 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="菜单名称" prop="menuName">
-        <el-input v-model="addMenuForm.menuName" placeholder="请输入菜单名称"></el-input>
-      </el-form-item>
-      <el-form-item label="菜单路径" prop="path">
-        <el-input v-model="addMenuForm.path" placeholder="请输入菜单路径"></el-input>
-      </el-form-item>
-      <el-form-item label="权限编码" prop="permission">
-        <el-input v-model="addMenuForm.permission" placeholder="请输入权限编码"></el-input>
-      </el-form-item>
-      <el-form-item label="组件名称" prop="component">
-        <el-input v-model="addMenuForm.component" placeholder="请输入组件名称"></el-input>
-      </el-form-item>
-      <el-form-item label="菜单类型" prop="type">
-        <el-radio-group v-model="addMenuForm.type">
-          <el-radio :label="1">目录</el-radio>
-          <el-radio :label="2">菜单</el-radio>
-          <el-radio :label="3">按钮</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="菜单图标" prop="icon">
-        <el-input v-model="addMenuForm.icon" placeholder="请输入菜单图标"></el-input>
-      </el-form-item>
       <el-form-item label="排序号" prop="orderNum">
         <el-input-number
             v-model="addMenuForm.orderNum"
@@ -81,6 +59,7 @@ export default {
     }
   },
   methods: {
+
     addMenu() {
       this.$axios.post("/fanBlog/menu/addMenu", this.addMenuForm).then(res => {
         if (res.data.code == 200) {
@@ -98,6 +77,22 @@ export default {
         }
       });
     },
+    addBlog() {
+      this.$axios.post('/fanBlog/blog/addBlog', this.editForm).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: '发布成功',
+            type: 'success'
+          });
+          this.$router.go(-1);
+        } else {
+          this.$message({
+            message: '发布失败',
+            type: 'error'
+          });
+        }
+      })
+    },
     handleNodeClick(data) {
       this.addMenuForm.parentId = data.menuId;
       this.addMenuForm.parentName = data.menuName;
@@ -107,10 +102,9 @@ export default {
       this.dialogVisible = false;
     },
   },
-  created() {
-    this.$bus.$on('addMenu', menuList => {
+  mounted() {
+    this.$bus.$on('addBlog', blog => {
       this.dialogVisible = true;
-      this.menuList = menuList;
     });
   }
 }

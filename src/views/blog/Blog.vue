@@ -14,7 +14,7 @@
         </el-form>
       </div>
       <div style="margin-left: 10px; min-width: 120px; line-height: 50px">
-        <el-button type="primary" size="medium" round @click="$bus.$emit('addMenu')">新增博客</el-button>
+        <el-button type="primary" size="medium" round @click="$bus.$emit('addBlog', this.editForm)">新增博客</el-button>
       </div>
     </div>
     <div style="border-top: 1px solid #ccc">
@@ -51,24 +51,6 @@ export default {
         ]
       }
     }
-  },
-  methods: {
-    addBlog() {
-      this.$axios.post('/fanBlog/blog/addBlog', this.editForm).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: '发布成功',
-            type: 'success'
-          });
-          this.$router.go(-1);
-        } else {
-          this.$message({
-            message: '发布失败',
-            type: 'error'
-          });
-        }
-      })
-    },
   },
   components: {
     Vditor,

@@ -120,7 +120,7 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    getMenuTree() {
+    getMenuList() {
       this.$axios.get('/fanBlog/menu/queryAllMenu').then(res => {
         this.menuList = res.data.data;
       });
@@ -137,7 +137,7 @@ export default {
             message: res.data.msg,
             type: 'success'
           });
-          this.getMenuTree();
+          this.getMenuList();
         });
       }).catch(() => {
         this.$message({
@@ -149,11 +149,12 @@ export default {
   },
   mounted() {
     this.$bus.$on('refreshMenuList', () => {
-      this.getMenuTree();
+      this.$store.state.hasRoute = false;
+      this.getMenuList();
     });
   },
   created() {
-    this.getMenuTree();
+    this.menuList = this.$store.state.menuList;
   },
   components: {
     MenuAdd,
