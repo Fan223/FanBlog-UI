@@ -69,7 +69,7 @@ export function toolbar() {
             tipPosition: 'n',
             tip: '保存',
             className: 'save',
-            icon: '<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>保存</title> <g id="保存" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="编组备份"><rect id="Rectangle-4" x="0" y="0" width="16" height="16"></rect> <path d="M14,0 C15.1045695,0 16,0.8954305 16,2 L16,14 C16,15.1045695 15.1045695,16 14,16 L2,16 C0.8954305,16 0,15.1045695 0,14 L0,2 C0,0.8954305 0.8954305,0 2,0 L14,0 Z M14,2 L2,2 L2,14 L14,14 L14,2 Z" id="矩形" fill="#555666" fill-rule="nonzero"></path> <rect id="矩形" fill="#555666" x="4" y="2" width="4" height="4"></rect> <polygon id="路径" fill="#555666" fill-rule="nonzero" points="13 2 13 6 5 6 5 4 11 4 11 2"></polygon></g></g></svg>',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg>',
             click() {
                 Vue.prototype.$bus.$emit('save');
             }

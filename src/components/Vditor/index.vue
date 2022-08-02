@@ -19,6 +19,7 @@ export default {
   mounted() {
     this.contentEditor = new Vditor("vditor", {
       height: "100vh",
+      minHeight: "auto",
       width: "100%",
       icon: "material",
       lang: 'zh_CN',
@@ -37,9 +38,6 @@ export default {
       counter: {
         enable: true,
         type: "text"
-      },
-      comment: {
-        enable: true
       },
       mode: "wysiwyg",
       preview: preview(),
@@ -64,14 +62,14 @@ export default {
       return this.contentEditor.getValue(); // 获取 Markdown 内容
     },
     setValue (value) {
-      return this.contentEditor.setValue(value);     //设置 Markdown 内容
+      return this.contentEditor.setValue(value); // 设置 Markdown 内容
     },
-    disabled () {
-      return this.contentEditor.disabled();     //设置只读
-    },
-    save() {
-      this.$bus.$emit('save');
-    }
   },
 }
 </script>
+
+<style scoped>
+#vditor {
+  border: none;
+}
+</style>

@@ -8,14 +8,7 @@
       text-color="#fff"
       active-text-color="#ffd04b"
   >
-    <!--    <router-link to="/home">-->
-    <!--      <el-menu-item index="title">-->
-    <!--        <i class='el-icon-menu'></i>-->
-    <!--        <span slot="title"> 个人博客 </span>-->
-    <!--      </el-menu-item>-->
-    <!--    </router-link>-->
-    <el-menu-item index="title" @click="$router.go(0)"
-    >
+    <el-menu-item index="title" @click="$router.go(0)">
       <i class="el-icon-menu" v-show="!$store.state.isCollapse"></i>
       <span slot="title"> <b> FanBlog</b> </span>
     </el-menu-item>
@@ -35,9 +28,15 @@
           <i :class=menu.icon></i>
           <span slot="title"> {{ menu.menuName }} </span>
         </template>
+
         <template v-for="child in menu.children">
-          <router-link :to="child.path" :key="child.menuId">
-            <el-menu-item :index="child.path">
+          <router-link :to="{
+            path: child.path,
+            query: {
+              menuId: child.menuId
+            }
+          }" :key="child.menuId">
+            <el-menu-item :index="child.menuId">
               <i :class=child.icon></i>
               <span slot="title"> {{ child.menuName }} </span>
             </el-menu-item>
@@ -46,7 +45,7 @@
       </el-submenu>
 
       <router-link v-else :to="menu.path" :key="menu.menuId">
-        <el-menu-item :index="menu.path">
+        <el-menu-item :index="menu.menuId">
           <i :class=menu.icon></i>
           <span slot="title"> {{ menu.menuName }} </span>
         </el-menu-item>
