@@ -1,0 +1,16 @@
+.mainContainer {
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 5px grey;
+}
+.mainHeader {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    /*line-height: 50px;*/
+}

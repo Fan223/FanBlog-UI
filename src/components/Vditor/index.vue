@@ -62,7 +62,7 @@ export default {
       return this.contentEditor.getValue(); // 获取 Markdown 内容
     },
     setValue (value) {
-      return this.contentEditor.setValue(value); // 设置 Markdown 内容
+      this.contentEditor.setValue(value); // 设置 Markdown 内容
     },
   },
 }

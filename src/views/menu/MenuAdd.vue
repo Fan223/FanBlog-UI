@@ -88,9 +88,8 @@ export default {
             message: "添加成功",
             type: "success"
           });
-          // this.$bus.$emit("refreshMenuList");
-          // this.dialogVisible = false;
-          this.$router.go(0)
+          this.$bus.$emit("refreshMenuList");
+          this.dialogVisible = false;
         } else {
           this.$message({
             message: res.data.msg,

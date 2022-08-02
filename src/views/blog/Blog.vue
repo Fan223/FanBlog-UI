@@ -20,7 +20,7 @@
     <div style="border-top: 1px solid #ccc">
       <el-form ref="editForm" :model="editForm">
         <el-form-item prop="content">
-          <Vditor ref="markdownEditor" v-model="editForm.content"></Vditor>
+          <Vditor ref="markdownEditor"></Vditor>
         </el-form-item>
       </el-form>
     </div>
@@ -42,14 +42,6 @@ export default {
         title: '',
         content: ''
       },
-      rules: {
-        title: [
-          {required: true, message: '请输入标题', trigger: 'blur'}
-        ],
-        content: [
-          {required: true, message: '请输入内容', trigger: 'blur'}
-        ]
-      }
     }
   },
   components: {
@@ -59,8 +51,9 @@ export default {
   mounted() {
     this.$bus.$on('save', () => {
       this.editForm.content = this.$refs.markdownEditor.getValue();
+      localStorage.setItem('content', this.editForm.content);
     });
-  }
+  },
 }
 </script>
 

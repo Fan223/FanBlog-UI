@@ -103,7 +103,7 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on('addBlog', blog => {
+    this.$bus.$on('addBlog', () => {
       this.dialogVisible = true;
     });
   }
