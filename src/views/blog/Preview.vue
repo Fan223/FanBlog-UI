@@ -15,7 +15,7 @@ export default {
       handler(){
         this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.query.menuId).then(res => {
           if (res.data.code == 200) {
-            this.$refs.markdownEditor.setValue(res.data.data.content)
+            this.$refs.markdownEditor.setValue(res.data.data.content);
           }
         });
       },

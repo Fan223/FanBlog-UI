@@ -5,20 +5,13 @@
       :close-on-click-modal="false"
       width="50%"
       class="addMenu-dialog">
-    <el-form :model="addMenuForm" ref="addMenuForm" label-width="80px" style="margin-top: -20px">
-      <el-form-item label="上级菜单" prop="parentName">
-        <el-select v-model="addMenuForm.parentName" clearable placeholder="请选择上级菜单">
-          <el-option :value="addMenuForm.parentName" style="height: auto">
-            <el-tree
-                :data="menuList"
-                :props="defaultProps"
-                node-key="menuId"
-                check-strictly
-                :default-expand-all="true"
-                @node-click="handleNodeClick">
-            </el-tree>
-          </el-option>
-        </el-select>
+    <el-form :model="addMenuForm" ref="addBlogForm" label-width="80px" style="margin-top: -20px">
+      <el-form-item label="选择分类" prop="menuId">
+        <el-checkbox-group
+            v-model="checkedMenu"
+            :max="1">
+          <el-checkbox v-for="menu in menuList" :label="menu.menuId" :key="menu.menuId">{{ menu.menuName }}</el-checkbox>
+        </el-checkbox-group>
       </el-form-item>
       <el-form-item label="排序号" prop="orderNum">
         <el-input-number
@@ -41,25 +34,18 @@ export default {
     return {
       dialogVisible: false,
       menuList: [],
+      checkedMenu: [],
       defaultProps: {
         children: 'children',
         label: 'menuName',
       },
       addMenuForm: {
         parentId: "",
-        parentName: "",
-        menuName: "",
-        path: "",
-        permission: "",
-        component: "",
-        type: 1,
-        icon: "",
         orderNum: 1,
       },
     }
   },
   methods: {
-
     addMenu() {
       this.$axios.post("/fanBlog/menu/addMenu", this.addMenuForm).then(res => {
         if (res.data.code == 200) {
@@ -93,10 +79,6 @@ export default {
         }
       })
     },
-    handleNodeClick(data) {
-      this.addMenuForm.parentId = data.menuId;
-      this.addMenuForm.parentName = data.menuName;
-    },
     resetForm() {
       this.$refs['addMenuForm'].resetFields();
       this.dialogVisible = false;
@@ -105,6 +87,7 @@ export default {
   mounted() {
     this.$bus.$on('addBlog', () => {
       this.dialogVisible = true;
+      this.menuList = this.$store.state.menuList;
     });
   }
 }

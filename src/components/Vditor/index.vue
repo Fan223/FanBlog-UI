@@ -46,17 +46,17 @@ export default {
       hint: {
         emoji: emoji(),
       },
-      after: () => {
-        this.contentEditor.setValue(this.content)
-      },
+      // after: () => {
+      //   this.contentEditor.setValue(this.content)
+      // },
     })
   },
-  props: {
-    content: {
-      type: String,
-      default: ""
-    },
-  },
+  // props: {
+  //   content: {
+  //     type: String,
+  //     default: ""
+  //   },
+  // },
   methods: {
     getValue() {
       return this.contentEditor.getValue(); // 获取 Markdown 内容
@@ -64,6 +64,14 @@ export default {
     setValue (value) {
       this.contentEditor.setValue(value); // 设置 Markdown 内容
     },
+  },
+  watch: {
+    contentEditor: {
+      deep: true,
+      handler() {
+        this.$emit('save')
+      }
+    }
   },
 }
 </script>

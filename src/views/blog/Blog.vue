@@ -14,7 +14,7 @@
         </el-form>
       </div>
       <div style="margin-left: 10px; min-width: 120px; line-height: 50px">
-        <el-button type="primary" size="medium" round @click="$bus.$emit('addBlog', this.editForm)">新增博客</el-button>
+        <el-button type="primary" size="medium" round @click="$bus.$emit('addBlog', editForm)">发布博客</el-button>
       </div>
     </div>
     <div style="border-top: 1px solid #ccc">
@@ -40,7 +40,8 @@ export default {
     return {
       editForm: {
         title: '',
-        content: ''
+        content: '',
+        blogId: '',
       },
     }
   },
@@ -49,9 +50,20 @@ export default {
     BlogAdd
   },
   mounted() {
+    this.$bus.$on('saveBlog', () => {
+      this.editForm.content = this.$refs.markdownEditor.getValue();
+      this.$axios.post('/fanBlog/blog/saveBlog', this.editForm).then(res => {
+        if (res.data.code == 200) {
+          res.data.msg() == '保存成功' ? this.$message.success('保存成功') : '';
+          this.editForm.blogId = res.data.data;
+        } else {
+          this.$message.error(res.data.msg);
+        }
+      });
+    });
+
     this.$bus.$on('save', () => {
       this.editForm.content = this.$refs.markdownEditor.getValue();
-      localStorage.setItem('content', this.editForm.content);
     });
   },
 }

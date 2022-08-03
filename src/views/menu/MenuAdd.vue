@@ -84,17 +84,11 @@ export default {
     addMenu() {
       this.$axios.post("/fanBlog/menu/addMenu", this.addMenuForm).then(res => {
         if (res.data.code == 200) {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
+          this.$message.success("添加成功");
           this.$bus.$emit("refreshMenuList");
           this.dialogVisible = false;
         } else {
-          this.$message({
-            message: res.data.msg,
-            type: "error"
-          });
+          this.$message.error(res.data.msg);
         }
       });
     },

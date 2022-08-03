@@ -78,7 +78,7 @@
               菜单
             </el-tag>
             <el-tag v-if="scope.row.type === 3" size="small" effect="dark" type="info">
-              按钮
+              文章
             </el-tag>
           </template>
         </el-table-column>
@@ -136,19 +136,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        console.log(row);
         this.$axios.delete('/fanBlog/menu/deleteMenu', {data: row}).then(res => {
-          this.$message({
-            message: res.data.msg,
-            type: 'success'
-          });
+          this.$message.success("删除成功");
           this.getMenuList();
         });
       }).catch(() => {
-        this.$message({
-          message: '已取消删除',
-          type: 'info'
-        });
+        this.$message.info('已取消删除');
       });
     }
   },
