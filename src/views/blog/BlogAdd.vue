@@ -1,28 +1,29 @@
 <template>
   <el-dialog
-      title="新增菜单"
+      title="发布文章"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
-      width="50%"
       class="addMenu-dialog">
-    <el-form :model="addMenuForm" ref="addBlogForm" label-width="80px" style="margin-top: -20px">
-      <el-form-item label="选择分类" prop="menuId">
-        <el-checkbox-group
-            v-model="checkedMenu"
-            :max="1">
-          <el-checkbox v-for="menu in menuList" :label="menu.menuId" :key="menu.menuId">{{ menu.menuName }}</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="排序号" prop="orderNum">
+    <el-form :model="addBlogForm" ref="addBlogForm">
+      <span>选择分类：</span>
+      <el-checkbox-group
+          v-model="addBlogForm.menuId"
+          :max="1">
+        <el-checkbox border v-for="menu in menuList" :label="menu.menuId"
+                     :key="menu.menuId">
+          {{ menu.menuName }}
+        </el-checkbox>
+      </el-checkbox-group>
+      <el-form-item label="排序号：" prop="orderNum">
         <el-input-number
-            v-model="addMenuForm.orderNum"
+            v-model="addBlogForm.orderNum"
             :min="1">
         </el-input-number>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="resetForm">取 消</el-button>
-      <el-button type="primary" @click="addMenu">确 定</el-button>
+      <el-button type="primary" @click="addBlog">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -33,61 +34,45 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      menuList: [],
       checkedMenu: [],
+      menuList: [],
       defaultProps: {
         children: 'children',
         label: 'menuName',
       },
-      addMenuForm: {
-        parentId: "",
+      addBlogForm: {
+        blogId: '',
+        menuId: [],
         orderNum: 1,
+        title: '',
+        content: '',
       },
     }
   },
   methods: {
-    addMenu() {
-      this.$axios.post("/fanBlog/menu/addMenu", this.addMenuForm).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-          this.$bus.$emit("refreshMenuList");
-          this.dialogVisible = false;
-        } else {
-          this.$message({
-            message: res.data.msg,
-            type: "error"
-          });
-        }
-      });
-    },
     addBlog() {
-      this.$axios.post('/fanBlog/blog/addBlog', this.editForm).then(res => {
+      this.addBlogForm.menuId = this.addBlogForm.menuId[0];
+      this.$axios.post('/fanBlog/blog/addBlog', this.addBlogForm).then(res => {
         if (res.data.code == 200) {
-          this.$message({
-            message: '发布成功',
-            type: 'success'
-          });
+          this.$message.success("发布成功")
           this.$router.go(-1);
         } else {
-          this.$message({
-            message: '发布失败',
-            type: 'error'
-          });
+          this.$message.success(res.data.msg)
         }
       })
     },
     resetForm() {
-      this.$refs['addMenuForm'].resetFields();
+      this.$refs['addBlogForm'].resetFields();
       this.dialogVisible = false;
     },
   },
   mounted() {
-    this.$bus.$on('addBlog', () => {
+    this.$bus.$on('addBlog', (blog) => {
       this.dialogVisible = true;
       this.menuList = this.$store.state.menuList;
+      this.addBlogForm.blogId = blog.blogId;
+      this.addBlogForm.title = blog.title;
+      this.addBlogForm.content = blog.content;
     });
   }
 }
@@ -97,13 +82,15 @@ export default {
 .addMenu-dialog {
   margin-top: -5%;
 }
-
 .el-form {
-  width: 80%;
-  margin: 0 auto;
+  width: 70%;
+  margin: -20px auto;
 }
-
-.el-form-item {
-  margin: 20px auto;
+.el-checkbox-group {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 5px grey;
+  width: 80%; margin: 20px auto;
+  padding: 20px;
 }
 </style>
