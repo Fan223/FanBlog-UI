@@ -16,17 +16,21 @@
         ></el-button>
       </el-button-group>
       <router-link to="/blog/add">
-        <b style="color: #ffffff">发布博客</b>
+        <el-avatar style="vertical-align: middle;" :src="avatar" :size="45">
+        </el-avatar>
       </router-link>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import avatar from '@/assets/img/avatar.jpg';
 export default {
   name: 'NavHeader',
   data() {
-    return {}
+    return {
+      avatar: avatar,
+    };
   },
 }
 </script>
@@ -40,9 +44,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   line-height: 60px;
-}
-.el-button-group {
-  margin-left: 10px;
 }
 a {
   text-decoration: none;

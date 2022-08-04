@@ -9,6 +9,7 @@
       active-text-color="#ffd04b"
   >
     <el-menu-item index="title" @click="$router.go(0)">
+      <i class="el-icon-menu" v-show="$store.state.isCollapse"></i>
       <i class="el-icon-menu" v-show="!$store.state.isCollapse"></i>
       <span slot="title"> <b> FanBlog</b> </span>
     </el-menu-item>
@@ -68,6 +69,9 @@ export default {
 <style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
+  border: none;
+}
+.el-menu-vertical-demo{
   border: none;
 }
 

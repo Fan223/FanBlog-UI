@@ -18,7 +18,7 @@ const router = new VueRouter({
         {
             path: '/blog/add',
             name: 'AddBlog',
-            component: () => import('@/views/blog/Blog.vue'),
+            component: () => import('@/views/blog/BlogAdd.vue'),
         },
         {
             path: '/',

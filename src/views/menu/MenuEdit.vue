@@ -8,7 +8,7 @@
       class="editMenu-dialog">
     <el-form ref="editMenuForm" :model="editMenuForm" label-width="80px" style="margin-top: -20px">
       <el-form-item label="上级菜单" prop="parentName">
-        <el-select v-model="editMenuForm.parentName" clearable placeholder="请选择上级菜单">
+        <el-select v-model="editMenuForm.parentName" clearable @clear="clearParent" placeholder="请选择上级菜单">
           <el-option :value="editMenuForm.parentName" style="height: auto">
             <el-tree
                 :data="menuList"
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     editMenu() {
-      this.$axios.put("/fanBlog/menu/editMenu", this.editMenuForm).then(res => {
+      this.$axios.put("/fanBlog/menu/updateMenu", this.editMenuForm).then(res => {
         if (res.data.code == 200) {
           this.$message({
             message: "修改成功",
@@ -95,6 +95,10 @@ export default {
     },
     resetForm() {
       this.$refs['editMenuForm'].resetFields();
+    },
+    clearParent() {
+      this.editMenuForm.parentId = '';
+      this.editMenuForm.parentName = '';
     },
   },
   created() {

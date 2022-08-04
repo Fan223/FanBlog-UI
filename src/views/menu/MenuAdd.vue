@@ -86,7 +86,7 @@ export default {
         if (res.data.code == 200) {
           this.$message.success("添加成功");
           this.$bus.$emit("refreshMenuList");
-          this.dialogVisible = false;
+          this.resetForm();
         } else {
           this.$message.error(res.data.msg);
         }
@@ -98,6 +98,7 @@ export default {
     },
     resetForm() {
       this.$refs['addMenuForm'].resetFields();
+      this.addMenuForm.parentId = '';
       this.dialogVisible = false;
     },
   },

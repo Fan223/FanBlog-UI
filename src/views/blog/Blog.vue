@@ -1,85 +1,93 @@
 <template>
-  <div>
-    <div style="display: flex; height: 50px; background-color: #24292e;">
-      <div style="margin-left: 20px; min-width: 120px; color: #fff; line-height: 50px">
-        <el-icon class="el-icon-arrow-left"></el-icon>
-        博客管理
-      </div>
-      <div style="margin-top: 4px; width: 80%">
-        <el-form ref="editForm" :model="editForm">
-          <el-form-item prop="title">
-            <el-input v-model="editForm.title" placeholder="请输入标题" maxlength="100" show-word-limit>
-            </el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div style="margin-left: 10px; min-width: 120px; line-height: 50px">
-        <el-button type="primary" size="medium" round @click="addBlog">发布博客</el-button>
-      </div>
+  <div class="mainContainer">
+    <div class="mainHeader">
+      <h1>博客管理</h1>
+      <router-link to="/blog/add">
+        <el-button type="primary" size="medium"
+                   style="margin-right: 20px; margin-bottom: -10px">新增
+        </el-button>
+      </router-link>
+
     </div>
-    <div style="border-top: 1px solid #ccc">
-      <el-form ref="editForm" :model="editForm">
-        <el-form-item prop="content">
-          <Vditor ref="markdownEditor"></Vditor>
-        </el-form-item>
-      </el-form>
+    <div style="padding-left: 40px; padding-right: 40px">
+      <el-table
+          ref="blogList"
+          :data="blogList"
+          fit
+          border
+          :stripe="true"
+          max-height=520
+          :header-cell-style="{background: '#ddd'}"
+          @selection-change="handleSelectionChange"
+          row-key="blogId"
+          :default-sort="{prop: 'orderNum', order: 'ascending'}">
+        <el-table-column
+            type="selection"
+            width="55"
+            align="center">
+        </el-table-column>
+        <el-table-column
+            prop="menuName"
+            label="分类"
+            align="center">
+        </el-table-column>
+        <el-table-column
+            prop="title"
+            label="标题"
+            align="center">
+        </el-table-column>
+        <el-table-column
+            prop="createTime"
+            label="创建时间"
+            align="center">
+        </el-table-column>
+        <el-table-column label="操作" width="150" fixed="right">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini">
+              编辑
+            </el-button>
+            <el-button
+                size="mini"
+                type="danger">删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-    <BlogAdd />
   </div>
+
 </template>
 
 <script>
-import "@/assets/js/vditor.js"
-import Vditor from "@/components/Vditor"
-import BlogAdd from "@/views/blog/BlogAdd";
+import "@/assets/css/container.css";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Blog',
   data() {
     return {
-      editForm: {
-        title: '',
-        content: '',
-        blogId: '',
-      },
+      blogList: [],
+      multipleSelection: []
     }
   },
   methods: {
-    addBlog() {
-      this.editForm.content = this.$refs.markdownEditor.getValue();
-      this.$bus.$emit('addBlog', this.editForm);
-    }
-  },
-  components: {
-    Vditor,
-    BlogAdd
-  },
-  mounted() {
-    this.$bus.$on('saveBlog', () => {
-      this.editForm.content = this.$refs.markdownEditor.getValue();
-      this.$axios.post('/fanBlog/blog/saveBlog', this.editForm).then(res => {
-        if (res.data.code == 200) {
-          res.data.msg == '保存成功' ? this.$message.success('保存成功') : '';
-          this.editForm.blogId = res.data.data;
-        } else {
-          this.$message.error(res.data.msg);
-        }
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    getBlogList() {
+      this.$axios.get('/fanBlog/blog/queryAllBlog').then(res => {
+        this.blogList = res.data.data;
       });
-    });
-
-    this.$bus.$on('save', () => {
-      this.editForm.content = this.$refs.markdownEditor.getValue();
-    });
+    },
+  },
+  created() {
+    this.getBlogList();
   },
 }
 </script>
 
-<style scope>
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+<style scoped>
+.el-table {
+  margin-bottom: 50px;
 }
 </style>
