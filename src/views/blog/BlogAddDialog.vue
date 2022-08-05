@@ -74,7 +74,7 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on('addBlog', (blog) => {
+    this.$bus.$on('addBlogDialog', (blog) => {
       this.dialogVisible = true;
       this.menuList = this.$store.state.menuList;
       this.addBlogForm.blogId = blog.blogId;

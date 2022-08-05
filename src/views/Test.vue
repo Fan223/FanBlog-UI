@@ -52,25 +52,25 @@ export default {
     this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=ade50d1a-ce21-45f8-9c24-e3e64478d717')
         .then(res => {
           console.log(res)
-      Vditor.preview(document.getElementById('preview'),
-          res.data.data.content, {
-            speech: {
-              enable: true,
-            },
-            anchor: 1,
-            after() {
-              if (window.innerWidth <= 768) {
-                return
-              }
-              const outlineElement = document.getElementById('outline')
-              Vditor.outlineRender(document.getElementById('preview'), outlineElement)
-              if (outlineElement.innerText.trim() !== '') {
-                outlineElement.style.display = 'block'
-                initOutline()
-              }
-            },
-          })
-    })
+          Vditor.preview(document.getElementById('preview'),
+              res.data.data.content, {
+                speech: {
+                  enable: true,
+                },
+                anchor: 1,
+                after() {
+                  if (window.innerWidth <= 768) {
+                    return
+                  }
+                  const outlineElement = document.getElementById('outline')
+                  Vditor.outlineRender(document.getElementById('preview'), outlineElement)
+                  if (outlineElement.innerText.trim() !== '') {
+                    outlineElement.style.display = 'block'
+                    initOutline()
+                  }
+                },
+              })
+        })
   }
 }
 </script>

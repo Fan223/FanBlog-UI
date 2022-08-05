@@ -137,8 +137,12 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$axios.delete('/fanBlog/menu/deleteMenu', {data: row}).then(res => {
-          this.$message.success("删除成功");
-          this.getMenuList();
+          if (res.data.code === 200) {
+            this.$message.success("删除成功");
+            this.getMenuList();
+          } else {
+            this.$message.error("删除失败")
+          }
         });
       }).catch(() => {
         this.$message.info('已取消删除');

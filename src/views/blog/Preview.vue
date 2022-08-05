@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Vditor ref="markdownEditor" />
+    <Vditor ref="markdownEditor" flag="preview" :content="content"/>
   </div>
 </template>
 
@@ -10,12 +10,17 @@ import Vditor from "@/components/Vditor"
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Preview",
+  data() {
+    return {
+      content: '',
+    }
+  },
   watch:{
     $route:{
       handler(){
         this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.query.menuId).then(res => {
           if (res.data.code == 200) {
-            this.$refs.markdownEditor.setValue(res.data.data.content);
+            this.content = res.data.data.content;
           }
         });
       },

@@ -22,7 +22,7 @@
     <div style="border-top: 1px solid #ccc">
       <el-form ref="editForm" :model="editForm">
         <el-form-item prop="content">
-          <Vditor ref="markdownEditor"></Vditor>
+          <Vditor ref="markdownEditor" :content="editForm.content"></Vditor>
         </el-form-item>
       </el-form>
     </div>
@@ -50,9 +50,14 @@ export default {
   },
   methods: {
     addBlog() {
-      this.editForm.content = this.$refs.markdownEditor.getValue();
-      this.$bus.$emit('addBlog', this.editForm);
-    }
+      // this.editForm.content = this.$refs.markdownEditor.getValue();
+      this.$bus.$emit('addBlogDialog', this.editForm);
+    },
+    getMenuList() {
+      this.$axios.get('/fanBlog/menu/queryAllMenu').then(res => {
+        this.$store.state.menuList = res.data.data;
+      });
+    },
   },
   components: {
     Vditor,
@@ -65,6 +70,7 @@ export default {
         if (res.data.code == 200) {
           this.$message.success('保存成功');
           this.editForm = res.data.data;
+          this.getMenuList();
         } else {
           this.$message.error(res.data.msg);
         }

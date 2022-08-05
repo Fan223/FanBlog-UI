@@ -14,64 +14,76 @@ export default {
   data() {
     return {
       contentEditor: '',
+      blogContent: '',
     }
   },
   mounted() {
-    this.contentEditor = new Vditor("vditor", {
-      height: "100vh",
-      minHeight: "auto",
-      width: "100%",
-      icon: "material",
-      lang: 'zh_CN',
-      theme: "dark",
-      outline: {
-        enable: true,
-        position: "right",
-      },
-      toolbarConfig: {
-        pin: false,
-        hide: false,
-      },
-      cache: {
-        enable: false
-      },
-      counter: {
-        enable: true,
-        type: "text"
-      },
-      mode: "wysiwyg",
-      preview: preview(),
-      placeholder: "请输入内容",
-      toolbar: toolbar(),
-      hint: {
-        emoji: emoji(),
-      },
-      // after: () => {
-      //   this.contentEditor.setValue(this.content)
-      // },
-    })
+    this.createVditor(this.flag === "add" ? "" : "加载中...");
   },
-  // props: {
-  //   content: {
-  //     type: String,
-  //     default: ""
-  //   },
-  // },
+  props: {
+    flag: {
+      type: String,
+      default: 'add',
+    },
+    content: {
+      type: String,
+      default: '',
+    },
+  },
   methods: {
     getValue() {
       return this.contentEditor.getValue(); // 获取 Markdown 内容
     },
-    setValue (value) {
-      this.contentEditor.setValue(value); // 设置 Markdown 内容
-    },
+    // setValue(value) {
+    //   this.contentEditor.setValue(value); // 设置 Markdown 内容
+    // },
+    createVditor(content) {
+      this.contentEditor = new Vditor("vditor", {
+        height: "100vh",
+        minHeight: "auto",
+        width: "100%",
+        icon: "material",
+        lang: 'zh_CN',
+        theme: "dark",
+        outline: {
+          enable: true,
+          position: "right",
+        },
+        toolbarConfig: {
+          pin: false,
+          hide: false,
+        },
+        cache: {
+          enable: false
+        },
+        counter: {
+          enable: true,
+          type: "text"
+        },
+        mode: "wysiwyg",
+        preview: preview(),
+        placeholder: "请输入内容",
+        toolbar: toolbar(),
+        hint: {
+          emoji: emoji(),
+        },
+        value: content,
+        after: () => {
+          if (this.flag == "preview") {
+            this.contentEditor.vditor.toolbar.elements.preview.firstElementChild.dispatchEvent(new CustomEvent("click"));
+          }
+        },
+      })
+    }
   },
   watch: {
-    contentEditor: {
+    content: {
+      handler(val) {
+        this.createVditor(val);
+      },
+      immediate: true,
       deep: true,
-      handler() {
-        this.$emit('save')
-      }
-    }
+    },
   },
 }
 </script>

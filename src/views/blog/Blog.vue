@@ -43,12 +43,20 @@
         </el-table-column>
         <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini">
-              编辑
-            </el-button>
+            <router-link :to="{
+              path: '/blog/preview',
+              query: {
+                menuId: scope.row.menuId,
+              }
+            }">
+              <el-button type="primary" size="mini">
+                编辑
+              </el-button>
+            </router-link>
             <el-button
                 size="mini"
-                type="danger">删除
+                type="danger"
+                @click="deleteBlog(scope.row)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -77,6 +85,30 @@ export default {
     getBlogList() {
       this.$axios.get('/fanBlog/blog/queryAllBlog').then(res => {
         this.blogList = res.data.data;
+      });
+    },
+    deleteBlog(row) {
+      this.$confirm('确认删除该菜单吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.delete('/fanBlog/blog/deleteBlog', {data: row}).then(res => {
+          if (res.data.code == 200) {
+            this.$message.success('删除成功');
+            this.getBlogList();
+            this.getMenuList();
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
+      }).catch(() => {
+        this.$message.info('已取消删除');
+      });
+    },
+    getMenuList() {
+      this.$axios.get('/fanBlog/menu/queryAllMenu').then(res => {
+        this.$store.state.menuList = res.data.data;
       });
     },
   },
