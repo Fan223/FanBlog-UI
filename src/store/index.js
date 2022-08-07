@@ -10,21 +10,25 @@ Vue.use(Vuex)
 const actions = {}
 // 准备 mutations——用于操作数据（state）
 const mutations = {
-  HANDLE_COLLAPSE(state){
-    state.isCollapse = !state.isCollapse
+  ADD_TAB(state, tab) {
+    let index = state.tabs.findIndex(item => item.name === tab.menuName);
+    if (index === -1) {
+      state.tabs.push({
+        name: tab.menuName,
+      });
+    }
+    state.tabValue = tab.menuName;
   },
-  SET_MENU_LIST(state, menuList){
-    state.menuList = menuList
-  },
-  CHANGE_ROUTE_STATUS(state, hasRoute){
-    state.hasRoute = hasRoute
-  }
 }
 // 准备state——用于存储数据
 const state = {
   isCollapse: false,
   hasRoute: false,
-  menuList: []
+  menuList: [],
+  tabValue: 'Home',
+  tabs: [{
+    name: '首页',
+  }],
 }
 // 准备getters——用于将state中的数据进行加工
 const getters = {}

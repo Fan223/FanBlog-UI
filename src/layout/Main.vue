@@ -8,7 +8,7 @@
       <el-header>
         <NavHeader />
       </el-header>
-
+      <Tabs />
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -19,13 +19,15 @@
 <script>
 import NavAside from './NavAside.vue'
 import NavHeader from './NavHeader.vue'
+import Tabs from './Tabs.vue'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Main',
   components: {
     NavAside,
-    NavHeader
+    NavHeader,
+    Tabs
   }
 };
 </script>
@@ -36,12 +38,13 @@ export default {
   height: 100vh;
 }
 .el-aside {
-  background-color: #545c64;
+  background-color: #001529;
 }
 .el-header {
-  background-color: #35363a;
+  border-bottom: 1px solid #ddd;
 }
 .el-main {
   padding: 0;
+  background-color: #f0f2f5;
 }
 </style>

@@ -28,9 +28,14 @@ const router = new VueRouter({
             children: [
                 {
                     path: '/home',
-                    name: 'Home',
+                    name: '首页',
                     component: () => import('@/views/Home.vue'),
                 },
+                {
+                    path: '/blog/preview',
+                    name: 'Preview',
+                    component: () => import('@/views/blog/Preview.vue'),
+                }
             ]
         },
     ]
@@ -41,7 +46,8 @@ router.beforeEach((to, from, next) => {
 
     if (!hasRoute) {
         axios.get('/fanBlog/menu/queryAllMenu').then(res => {
-            store.commit('SET_MENU_LIST', res.data.data)
+            // store.commit('SET_MENU_LIST', res.data.data)
+            store.state.menuList = res.data.data
 
             // 动态绑定路由
             res.data.data.forEach(menu => {
@@ -62,7 +68,7 @@ router.beforeEach((to, from, next) => {
                 }
             })
             hasRoute = true;
-            store.commit('CHANGE_ROUTE_STATUS', hasRoute);
+            store.state.hasRoute = hasRoute;
             next(to.path)
         })
     } else {
@@ -79,7 +85,6 @@ const menuToRouter = menu => {
             name: menu.menuName,
             component: () => import(`@/views/` + menu.component + '.vue'),
             meta: {
-                title: menu.menuName,
                 icon: menu.icon
             }
         }

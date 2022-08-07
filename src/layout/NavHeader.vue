@@ -4,13 +4,13 @@
       <el-button-group>
         <el-button
             v-show="!$store.state.isCollapse"
-            @click="$store.commit('HANDLE_COLLAPSE')"
+            @click="$store.state.isCollapse = !$store.state.isCollapse"
             icon="el-icon-s-fold"
             size="medium"
         ></el-button>
         <el-button
             v-show="$store.state.isCollapse"
-            @click="$store.commit('HANDLE_COLLAPSE')"
+            @click="$store.state.isCollapse = !$store.state.isCollapse"
             icon="el-icon-s-unfold"
             size="medium"
         ></el-button>

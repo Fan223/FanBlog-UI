@@ -4,11 +4,11 @@
       class="el-menu-vertical-demo"
       :collapse="this.$store.state.isCollapse"
       :collapse-transition="false"
-      background-color="#545c64"
       text-color="#fff"
+      background-color="#001529"
       active-text-color="#ffd04b"
   >
-    <el-menu-item index="title" @click="$router.go(0)">
+    <el-menu-item index="title" @click="$router.go(0)" style="background-color: #002140">
       <i class="el-icon-menu" v-show="$store.state.isCollapse"></i>
       <i class="el-icon-menu" v-show="!$store.state.isCollapse"></i>
       <span slot="title"> <b> FanBlog</b> </span>
@@ -23,8 +23,8 @@
 
     <template v-for="menu in menuList">
       <el-submenu v-if="menu.children && menu.children.length > 0"
-        :key="menu.menuId"
-        :index="menu.menuId">
+                  :key="menu.menuId"
+                  :index="menu.menuId">
         <template slot="title">
           <i :class=menu.icon></i>
           <span slot="title"> {{ menu.menuName }} </span>
@@ -37,7 +37,8 @@
               menuId: child.menuId
             }
           }" :key="child.menuId">
-            <el-menu-item :index="child.menuId">
+            <el-menu-item :index="child.menuId" style="background-color: #000c17"
+                          @click="addTab(child)">
               <i :class=child.icon></i>
               <span slot="title"> {{ child.menuName }} </span>
             </el-menu-item>
@@ -46,7 +47,7 @@
       </el-submenu>
 
       <router-link v-else :to="menu.path" :key="menu.menuId">
-        <el-menu-item :index="menu.menuId">
+        <el-menu-item :index="menu.menuId" @click="addTab(menu)">
           <i :class=menu.icon></i>
           <span slot="title"> {{ menu.menuName }} </span>
         </el-menu-item>
@@ -62,6 +63,11 @@ export default {
     menuList() {
       return this.$store.state.menuList;
     }
+  },
+  methods: {
+    addTab(menu) {
+      this.$store.commit('ADD_TAB', menu);
+    }
   }
 }
 </script>
@@ -71,10 +77,9 @@ export default {
   width: 200px;
   border: none;
 }
-.el-menu-vertical-demo{
+.el-menu-vertical-demo {
   border: none;
 }
-
 a {
   text-decoration: none;
 }
