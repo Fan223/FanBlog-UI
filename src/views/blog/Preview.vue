@@ -15,9 +15,9 @@ export default {
       content: '',
     }
   },
-  watch:{
-    $route:{
-      handler(){
+  watch: {
+    $route: {
+      handler() {
         this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.query.menuId).then(res => {
           if (res.data.code == 200) {
             this.content = res.data.data.content;
@@ -26,7 +26,7 @@ export default {
       },
       immediate: true,
       deep: true,
-    }
+    },
   },
   components: {
     Vditor
@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
 #preview {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 </style>

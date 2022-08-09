@@ -28,7 +28,7 @@ const router = new VueRouter({
             children: [
                 {
                     path: '/home',
-                    name: '首页',
+                    name: 'Home',
                     component: () => import('@/views/Home.vue'),
                 },
                 {
@@ -85,7 +85,7 @@ const menuToRouter = menu => {
             name: menu.menuName,
             component: () => import(`@/views/` + menu.component + '.vue'),
             meta: {
-                icon: menu.icon
+                icon: menu.icon,
             }
         }
     }

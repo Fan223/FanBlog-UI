@@ -37,7 +37,7 @@
               menuId: child.menuId
             }
           }" :key="child.menuId">
-            <el-menu-item :index="child.menuId" style="background-color: #000c17"
+            <el-menu-item :index="child.menuName" style="background-color: #000c17"
                           @click="addTab(child)">
               <i :class=child.icon></i>
               <span slot="title"> {{ child.menuName }} </span>

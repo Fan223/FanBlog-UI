@@ -8,7 +8,7 @@
     <el-tab-pane
         v-for="tab in tabs"
         :key="tab.name"
-        :label="tab.name"
+        :label="tab.label"
         :name="tab.name">
     </el-tab-pane>
   </el-tabs>
@@ -60,7 +60,9 @@ export default {
       this.$router.push({name: activeName});
     },
     clickTab(tab) {
-      this.$router.push({name: tab.name});
+      this.$router.push({
+        name: tab.label,
+      });
     }
   }
 }

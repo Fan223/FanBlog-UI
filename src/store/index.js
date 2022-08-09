@@ -14,7 +14,8 @@ const mutations = {
     let index = state.tabs.findIndex(item => item.name === tab.menuName);
     if (index === -1) {
       state.tabs.push({
-        name: tab.menuName,
+        name: tab.menuId,
+        label: tab.menuName,
       });
     }
     state.tabValue = tab.menuName;
@@ -27,7 +28,8 @@ const state = {
   menuList: [],
   tabValue: 'Home',
   tabs: [{
-    name: '首页',
+    name: 'Home',
+    label: '首页',
   }],
 }
 // 准备getters——用于将state中的数据进行加工
