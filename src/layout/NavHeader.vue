@@ -15,16 +15,19 @@
             size="medium"
         ></el-button>
       </el-button-group>
-      <router-link to="/blog/add">
+      <div>
+        <!--      <router-link to="/blog/add">-->
         <el-avatar style="vertical-align: middle;" :src="avatar" :size="45">
         </el-avatar>
-      </router-link>
+        <!--      </router-link>-->
+      </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
 import avatar from '@/assets/img/avatar.jpg';
+
 export default {
   name: 'NavHeader',
   data() {
@@ -39,12 +42,14 @@ export default {
 .el-row {
   color: #fff;
 }
+
 .el-col {
   display: flex;
   justify-content: space-between;
   align-items: center;
   line-height: 60px;
 }
+
 a {
   text-decoration: none;
 }

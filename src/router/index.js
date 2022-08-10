@@ -49,6 +49,8 @@ router.beforeEach((to, from, next) => {
             // store.commit('SET_MENU_LIST', res.data.data)
             store.state.menuList = res.data.data
 
+            // 获取现有路由
+            let routes = router.getRoutes();
             // 动态绑定路由
             res.data.data.forEach(menu => {
                 if (menu.children) {
@@ -56,14 +58,14 @@ router.beforeEach((to, from, next) => {
                     menu.children.forEach(child => {
                         let route = menuToRouter(child);
                         if (route) {
-                            router.addRoute("Main", route)
+                            router.addRoute("Main", route);
                         }
                     })
                 } else {
                     // 没有子菜单，直接动态绑定路由
                     let route = menuToRouter(menu);
                     if (route) {
-                        router.addRoute("Main", route)
+                        router.addRoute("Main", route);
                     }
                 }
             })

@@ -56,7 +56,7 @@ export default {
       this.$axios.post('/fanBlog/blog/addBlog', this.addBlogForm).then(res => {
         if (res.data.code == 200) {
           this.$message.success("发布成功")
-          this.getMenuList();
+          this.$store.state.hasRoute = false;
           this.$router.go(-1);
         } else {
           this.$message.success(res.data.msg)
@@ -66,11 +66,6 @@ export default {
     resetForm() {
       this.$refs['addBlogForm'].resetFields();
       this.dialogVisible = false;
-    },
-    getMenuList() {
-      this.$axios.get('/fanBlog/menu/queryAllMenu').then(res => {
-        this.$store.state.menuList = res.data.data;
-      });
     },
   },
   mounted() {

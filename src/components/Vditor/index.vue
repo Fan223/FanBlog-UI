@@ -18,7 +18,7 @@ export default {
     }
   },
   mounted() {
-    this.createVditor(this.flag === "add" ? "" : "加载中...");
+    this.createVditor(this.content);
   },
   props: {
     flag: {

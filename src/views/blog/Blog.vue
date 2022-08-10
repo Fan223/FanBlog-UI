@@ -88,7 +88,7 @@ export default {
       });
     },
     deleteBlog(row) {
-      this.$confirm('确认删除该菜单吗？', '提示', {
+      this.$confirm('确认删除该文章吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

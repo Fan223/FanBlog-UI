@@ -1,7 +1,12 @@
 <template>
   <div>
     <div style="display: flex; height: 50px; background-color: #24292e;">
-      <router-link to="/blog">
+      <router-link :to="{
+        name: '博客管理',
+        params: {
+          menuId: '5579ef3b-225b-4103-993c-2360ab5bc79e'
+        }
+      }">
         <div style="margin-left: 20px; min-width: 120px; color: #fff; line-height: 50px">
           <el-icon class="el-icon-arrow-left"></el-icon>
           博客管理
@@ -53,11 +58,6 @@ export default {
       // this.editForm.content = this.$refs.markdownEditor.getValue();
       this.$bus.$emit('addBlogDialog', this.editForm);
     },
-    getMenuList() {
-      this.$axios.get('/fanBlog/menu/queryAllMenu').then(res => {
-        this.$store.state.menuList = res.data.data;
-      });
-    },
   },
   components: {
     Vditor,
@@ -70,7 +70,7 @@ export default {
         if (res.data.code == 200) {
           this.$message.success('保存成功');
           this.editForm = res.data.data;
-          this.getMenuList();
+          this.$store.state.hasRoute = false;
         } else {
           this.$message.error(res.data.msg);
         }

@@ -18,21 +18,20 @@ export default {
   watch: {
     $route: {
       handler() {
-        this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.params.menuId).then(res => {
-          if (res.data.code == 200) {
-            this.content = res.data.data.content;
-            localStorage.setItem('content', this.content);
-          }
-        });
+        if (this.$route.params.menuId) {
+          this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.params.menuId).then(res => {
+            if (res.data.code == 200) {
+              this.content = res.data.data.content;
+              localStorage.setItem('content', this.content);
+            }
+          });
+        } else {
+          this.content = localStorage.getItem('content');
+        }
       },
       immediate: true,
       deep: true,
     },
-  },
-  mounted() {
-    if (!this.$route.params.menuId) {
-      this.content = localStorage.getItem('content');
-    }
   },
   components: {
     Vditor

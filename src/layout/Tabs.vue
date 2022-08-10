@@ -1,12 +1,12 @@
 <template>
   <el-tabs
-      v-model="tabValue"
+      v-model="$store.state.tabValue"
       type="card"
       :closable="true"
       @tab-remove="removeTab"
       @tab-click="clickTab">
     <el-tab-pane
-        v-for="tab in tabs"
+        v-for="tab in $store.state.tabs"
         :key="tab.name"
         :label="tab.label"
         :name="tab.name">
@@ -19,55 +19,34 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Tabs',
-  computed: {
-    tabValue: {
-      get() {
-        return this.$store.state.tabValue;
-      },
-      set(val) {
-        this.$store.state.tabValue = val;
-      }
-    },
-    tabs: {
-      get() {
-        return this.$store.state.tabs;
-      },
-      set(val) {
-        this.$store.state.tabs = val;
-      }
-    }
-  },
   methods: {
     removeTab(targetName) {
       if (targetName === 'Home') {
         return false;
       }
 
-      let tabs = this.tabs;
-      let activeName = this.tabValue;
-      let address = '';
+      let tabs = this.$store.state.tabs;
+      let activeName = this.$store.state.tabValue;
+      let nextTab = {};
 
       if (activeName === targetName) {
         tabs.forEach((tab, index) => {
           if (tab.name === targetName) {
-            let nextTab = tabs[index + 1] || tabs[index - 1];
+            nextTab = tabs[index + 1] || tabs[index - 1];
             if (nextTab) {
               activeName = nextTab.name;
-              address = nextTab.label;
             }
           }
         });
       }
-      this.tabValue = activeName;
-      console.log(tabs);
-      let filter = tabs.filter(tab => {
-        console.log(tab.name + ' ' + targetName);
-        return tab.name !== targetName
+      this.$store.state.tabValue = activeName;
+      this.$store.state.tabs = tabs.filter(tab => tab.name !== targetName);
+      this.$router.push({
+        name: nextTab.label,
+        params: {
+          menuId: nextTab.name
+        }
       });
-      console.log(filter);
-      this.tabs = filter;
-      // console.log(this.tabs)
-      this.$router.push({name: address});
     },
     clickTab(tab) {
       this.$router.push({
