@@ -1,14 +1,14 @@
 <template>
   <el-menu
-      default-active="1-1"
       class="el-menu-vertical-demo"
       :collapse="this.$store.state.isCollapse"
       :collapse-transition="false"
       text-color="#fff"
       background-color="#001529"
       active-text-color="#ffd04b"
+      :default-active="this.$store.state.tabValue"
   >
-    <el-menu-item index="title" @click="$router.go(0)" style="background-color: #002140">
+    <el-menu-item @click="$router.go(0)" style="background-color: #002140">
       <i class="el-icon-menu" v-show="$store.state.isCollapse"></i>
       <i class="el-icon-menu" v-show="!$store.state.isCollapse"></i>
       <span slot="title"> <b> FanBlog</b> </span>
@@ -32,13 +32,12 @@
 
         <template v-for="child in menu.children">
           <router-link :to="{
-            path: child.path,
-            query: {
+            name: child.menuName,
+            params: {
               menuId: child.menuId
             }
           }" :key="child.menuId">
-            <el-menu-item :index="child.menuName" style="background-color: #000c17"
-                          @click="addTab(child)">
+            <el-menu-item :index="child.menuId" style="background-color: #000c17">
               <i :class=child.icon></i>
               <span slot="title"> {{ child.menuName }} </span>
             </el-menu-item>
@@ -47,7 +46,7 @@
       </el-submenu>
 
       <router-link v-else :to="menu.path" :key="menu.menuId">
-        <el-menu-item :index="menu.menuId" @click="addTab(menu)">
+        <el-menu-item :index="menu.menuId">
           <i :class=menu.icon></i>
           <span slot="title"> {{ menu.menuName }} </span>
         </el-menu-item>
@@ -64,11 +63,6 @@ export default {
       return this.$store.state.menuList;
     }
   },
-  methods: {
-    addTab(menu) {
-      this.$store.commit('ADD_TAB', menu);
-    }
-  }
 }
 </script>
 

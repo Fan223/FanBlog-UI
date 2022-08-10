@@ -7,14 +7,15 @@ export default {
   name: 'App',
   watch: {
     $route(to) {
-      console.log(to)
-      if (to.name !== 'Preview' && to.path !== '/login' && to.name !== 'AddBlog') {
+      if (to.name !== 'Preview' && to.path !== '/login' && to.name !== 'AddBlog' && to.params.menuId) {
         let obj = {
+          menuId: to.params.menuId,
           menuName: to.name,
-          path: to.path,
-          menuId: to.query.menuId,
         }
         this.$store.commit('ADD_TAB', obj)
+      } else if (!this.$route.params.menuId && to.name != 'Home') {
+        let tab = JSON.parse(localStorage.getItem("tab"));
+        this.$store.commit('ADD_TAB', tab)
       }
     }
   },

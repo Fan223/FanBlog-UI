@@ -11,14 +11,15 @@ const actions = {}
 // 准备 mutations——用于操作数据（state）
 const mutations = {
   ADD_TAB(state, tab) {
-    let index = state.tabs.findIndex(item => item.name === tab.menuName);
+    let index = state.tabs.findIndex(item => item.name === tab.menuId);
     if (index === -1) {
       state.tabs.push({
         name: tab.menuId,
         label: tab.menuName,
       });
     }
-    state.tabValue = tab.menuName;
+    state.tabValue = tab.menuId;
+    localStorage.setItem("tab", JSON.stringify(tab));
   },
 }
 // 准备state——用于存储数据

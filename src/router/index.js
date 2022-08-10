@@ -28,7 +28,7 @@ const router = new VueRouter({
             children: [
                 {
                     path: '/home',
-                    name: 'Home',
+                    name: '首页',
                     component: () => import('@/views/Home.vue'),
                 },
                 {
