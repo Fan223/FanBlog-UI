@@ -46,32 +46,35 @@ router.beforeEach((to, from, next) => {
 
     if (!hasRoute) {
         axios.get('/fanBlog/menu/queryAllMenu').then(res => {
-            // store.commit('SET_MENU_LIST', res.data.data)
-            store.state.menuList = res.data.data
+            if (res.data.code === 200) {
+                // store.commit('SET_MENU_LIST', res.data.data)
+                store.state.menuList = res.data.data
+                store.state.hasRoute = true;
 
-            // 获取现有路由
-            let routes = router.getRoutes();
-            // 动态绑定路由
-            res.data.data.forEach(menu => {
-                if (menu.children) {
-                    // 如果有子菜单，则动态绑定子菜单的路由
-                    menu.children.forEach(child => {
-                        let route = menuToRouter(child);
+                // 动态绑定路由
+                res.data.data.forEach(menu => {
+                    if (menu.children) {
+                        // 如果有子菜单，则动态绑定子菜单的路由
+                        menu.children.forEach(child => {
+                            let route = menuToRouter(child);
+                            if (route) {
+                                if (router.getRoutes().findIndex(item => item.name === route.name) === -1) {
+                                    router.addRoute("Main", route);
+                                }
+                            }
+                        })
+                    } else {
+                        // 没有子菜单，直接动态绑定路由
+                        let route = menuToRouter(menu);
                         if (route) {
-                            router.addRoute("Main", route);
+                            if (router.getRoutes().findIndex(item => item.name === route.name) === -1) {
+                                router.addRoute("Main", route);
+                            }
                         }
-                    })
-                } else {
-                    // 没有子菜单，直接动态绑定路由
-                    let route = menuToRouter(menu);
-                    if (route) {
-                        router.addRoute("Main", route);
                     }
-                }
-            })
-            hasRoute = true;
-            store.state.hasRoute = hasRoute;
-            next(to.path)
+                })
+                next(to.path)
+            }
         })
     } else {
         next()

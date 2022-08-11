@@ -13,7 +13,7 @@ export default {
           menuName: to.name,
         }
         this.$store.commit('ADD_TAB', obj)
-      } else if (!this.$route.params.menuId && to.name != 'Home') {
+      } else if (!this.$route.params.menuId && to.name != '首页') {
         let tab = JSON.parse(localStorage.getItem("tab"));
         this.$store.commit('ADD_TAB', tab)
       }

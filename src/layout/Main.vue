@@ -41,7 +41,7 @@ export default {
   background-color: #001529;
 }
 .el-header {
-  border-bottom: 1px solid #ddd;
+  padding: 0;
 }
 .el-main {
   padding: 0;

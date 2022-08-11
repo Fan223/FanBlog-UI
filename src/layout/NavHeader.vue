@@ -6,21 +6,14 @@
             v-show="!$store.state.isCollapse"
             @click="$store.state.isCollapse = !$store.state.isCollapse"
             icon="el-icon-s-fold"
-            size="medium"
         ></el-button>
         <el-button
             v-show="$store.state.isCollapse"
             @click="$store.state.isCollapse = !$store.state.isCollapse"
             icon="el-icon-s-unfold"
-            size="medium"
         ></el-button>
       </el-button-group>
-      <div>
-        <!--      <router-link to="/blog/add">-->
-        <el-avatar style="vertical-align: middle;" :src="avatar" :size="45">
-        </el-avatar>
-        <!--      </router-link>-->
-      </div>
+      <el-avatar :src="avatar" :size="45"></el-avatar>
     </el-col>
   </el-row>
 </template>
@@ -42,15 +35,19 @@ export default {
 .el-row {
   color: #fff;
 }
-
 .el-col {
   display: flex;
   justify-content: space-between;
   align-items: center;
   line-height: 60px;
 }
-
-a {
-  text-decoration: none;
+.el-button {
+  color: #575757;
+  height: 60px;
+  border: none;
+  font-size: 18px;
+}
+.el-avatar {
+  margin-right: 25px;
 }
 </style>

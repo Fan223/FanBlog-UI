@@ -27,7 +27,7 @@
     <div style="border-top: 1px solid #ccc">
       <el-form ref="editForm" :model="editForm">
         <el-form-item prop="content">
-          <Vditor ref="markdownEditor" :content="editForm.content"></Vditor>
+          <Vditor ref="markdownEditor"></Vditor>
         </el-form-item>
       </el-form>
     </div>
