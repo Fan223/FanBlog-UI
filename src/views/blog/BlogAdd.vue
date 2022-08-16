@@ -21,7 +21,7 @@
         </el-form>
       </div>
       <div style="margin-left: 10px; min-width: 120px; line-height: 50px">
-        <el-button type="primary" size="medium" round @click="addBlog">发布博客</el-button>
+        <el-button type="medium" round @click="addBlog">发布文章</el-button>
       </div>
     </div>
     <div style="border-top: 1px solid #ccc">
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     addBlog() {
-      // this.editForm.content = this.$refs.markdownEditor.getValue();
+      this.editForm.content = this.$refs.markdownEditor.getValue();
       this.$bus.$emit('addBlogDialog', this.editForm);
     },
   },
@@ -76,20 +76,26 @@ export default {
         }
       });
     });
-
-    this.$bus.$on('save', () => {
-      this.editForm.content = this.$refs.markdownEditor.getValue();
-    });
   },
 }
 </script>
 
-<style scope>
+<style scoped>
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
+}
+.el-button {
+  background-color: #001529;
+  border: 1px solid #ffd04b;
+  color: #fff;
+}
+.el-button:hover {
+  background-color: #ffd04b;
+  /*border: 1px solid #ffd04b;*/
+  color: #001529;
 }
 a {
   text-decoration: none;

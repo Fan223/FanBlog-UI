@@ -34,9 +34,6 @@ export default {
     getValue() {
       return this.contentEditor.getValue(); // 获取 Markdown 内容
     },
-    // setValue(value) {
-    //   this.contentEditor.setValue(value); // 设置 Markdown 内容
-    // },
     createVditor(content) {
       this.contentEditor = new Vditor("vditor", {
         height: "100vh",
