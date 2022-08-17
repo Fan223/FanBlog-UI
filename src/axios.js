@@ -3,7 +3,7 @@ import ElementUI from "element-ui";
 import router from "./router";
 
 const request = axios.create({
-    timeout: 5000,
+    timeout: 20000,
     headers: {
         "Content-Type": "application/json",
     },

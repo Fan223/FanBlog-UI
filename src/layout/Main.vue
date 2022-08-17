@@ -5,7 +5,7 @@
     </el-aside>
 
     <el-container>
-      <el-header>
+      <el-header height="50px">
         <NavHeader />
       </el-header>
       <Tabs />

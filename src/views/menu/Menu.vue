@@ -50,25 +50,7 @@
         <el-table-column
             prop="type"
             label="菜单类型"
-            width="120"
-            align="center">
-        </el-table-column>
-        <el-table-column
-            prop="icon"
-            label="菜单图标"
-            width="130"
-            align="center">
-        </el-table-column>
-        <el-table-column
-            prop="orderNum"
-            label="排序号"
-            width="50"
-            align="center">
-        </el-table-column>
-        <el-table-column
-            prop="valiFlag"
-            label="状态"
-            width="70"
+            width="80"
             align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.type === 1" size="small" effect="dark">
@@ -83,11 +65,37 @@
           </template>
         </el-table-column>
         <el-table-column
+            prop="icon"
+            label="菜单图标"
+            width="130"
+            align="center">
+        </el-table-column>
+        <el-table-column
+            prop="orderNum"
+            label="排序号"
+            width="70"
+            align="center">
+        </el-table-column>
+        <el-table-column
+            prop="valiFlag"
+            label="状态"
+            width="80"
+            align="center">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.valiFlag === 0" size="small" effect="dark" type="danger">
+              禁用
+            </el-tag>
+            <el-tag v-if="scope.row.valiFlag === 1" size="small" effect="dark" type="success">
+              正常
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
             prop="createTime"
             label="创建时间"
             align="center">
         </el-table-column>
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="150" fixed="right" align="center">
           <template slot-scope="scope">
             <el-button @click="$bus.$emit('editMenu', scope.row, menuList)" type="primary" size="mini">
               编辑

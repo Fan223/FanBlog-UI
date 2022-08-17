@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100vh">
     <div style="display: flex; height: 50px; background-color: #24292e;">
       <router-link :to="{
         name: '博客管理',
@@ -47,7 +47,6 @@ export default {
     return {
       editForm: {
         blogId: '',
-        menuId: '',
         title: '',
         content: '',
       },
@@ -76,17 +75,18 @@ export default {
         }
       });
     });
+
+    if (this.$route.params.flag) {
+      this.editForm.blogId = this.$route.params.blogId;
+      this.editForm.title = this.$route.params.title;
+      this.editForm.content = this.$route.params.content;
+      this.$refs.markdownEditor.createVditor(this.editForm.content);
+    }
   },
 }
 </script>
 
 <style scoped>
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
 .el-button {
   background-color: #001529;
   border: 1px solid #ffd04b;

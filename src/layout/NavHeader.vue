@@ -13,7 +13,7 @@
             icon="el-icon-s-unfold"
         ></el-button>
       </el-button-group>
-      <el-avatar :src="avatar" :size="45"></el-avatar>
+      <el-avatar :src="avatar" :size="40"></el-avatar>
     </el-col>
   </el-row>
 </template>
@@ -39,11 +39,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  line-height: 60px;
+  line-height: 50px;
 }
 .el-button {
   color: #575757;
-  height: 60px;
+  height: 50px;
   border: none;
   font-size: 18px;
 }

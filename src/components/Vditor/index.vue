@@ -14,21 +14,20 @@ export default {
   data() {
     return {
       contentEditor: '',
-      blogContent: '',
     }
   },
   mounted() {
-    this.createVditor(this.content);
+    this.createVditor();
   },
   props: {
     flag: {
       type: String,
       default: 'add',
     },
-    content: {
-      type: String,
-      default: '',
-    },
+    // content: {
+    //   type: String,
+    //   default: '',
+    // },
   },
   methods: {
     getValue() {
@@ -73,15 +72,15 @@ export default {
       })
     }
   },
-  watch: {
-    content: {
-      handler(val) {
-        this.createVditor(val);
-      },
-      immediate: true,
-      deep: true,
-    },
-  },
+  // watch: {
+  //   content: {
+  //     handler(val) {
+  //       this.createVditor(val);
+  //     },
+  //     immediate: true,
+  //     deep: true,
+  //   },
+  // },
 }
 </script>
 

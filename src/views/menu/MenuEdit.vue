@@ -43,6 +43,12 @@
       <el-form-item label="菜单图标" prop="icon">
         <el-input v-model="editMenuForm.icon" placeholder="请输入菜单图标"></el-input>
       </el-form-item>
+      <el-form-item label="状态" prop="valiFlag">
+        <el-radio-group v-model="editMenuForm.valiFlag">
+          <el-radio :label="0">禁用</el-radio>
+          <el-radio :label="1">正常</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="排序号" prop="orderNum">
         <el-input-number
             v-model="editMenuForm.orderNum"

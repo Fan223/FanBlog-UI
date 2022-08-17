@@ -41,18 +41,11 @@
             label="创建时间"
             align="center">
         </el-table-column>
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="150" fixed="right" align="center">
           <template slot-scope="scope">
-            <router-link :to="{
-              path: '/blog/preview',
-              query: {
-                menuId: scope.row.menuId,
-              }
-            }">
-              <el-button type="primary" size="mini">
-                编辑
-              </el-button>
-            </router-link>
+            <el-button type="primary" size="mini" @click="editBlog(scope.row)">
+              编辑
+            </el-button>
             <el-button
                 size="mini"
                 type="danger"
@@ -111,6 +104,17 @@ export default {
         this.$store.state.menuList = res.data.data;
       });
     },
+    editBlog(row) {
+      this.$router.push({
+        name: 'AddBlog',
+        params: {
+          flag: 'edit',
+          blogId: row.blogId,
+          title: row.title,
+          content: row.content
+        }
+      })
+    }
   },
   created() {
     this.getBlogList();
