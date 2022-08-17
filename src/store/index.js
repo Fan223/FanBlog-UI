@@ -10,37 +10,38 @@ Vue.use(Vuex)
 const actions = {}
 // 准备 mutations——用于操作数据（state）
 const mutations = {
-  ADD_TAB(state, tab) {
-    let index = state.tabs.findIndex(item => item.name === tab.menuId);
-    if (index === -1) {
-      state.tabs.push({
-        name: tab.menuId,
-        label: tab.menuName,
-      });
-    }
-    state.tabValue = tab.menuId;
-    localStorage.setItem("tab", JSON.stringify(tab));
-  },
+    ADD_TAB(state, tab) {
+        let index = state.tabs.findIndex(item => item.name === tab.menuId);
+        if (index === -1) {
+            state.tabs.push({
+                name: tab.menuId,
+                label: tab.menuName,
+            });
+        }
+        state.tabValue = tab.menuId;
+        localStorage.setItem("tab", JSON.stringify(tab));
+    },
 }
 // 准备state——用于存储数据
 const state = {
-  isCollapse: false,
-  hasRoute: false,
-  menuList: [],
-  tabValue: 'Home',
-  tabs: [{
-    name: 'Home',
-    label: '首页',
-  }],
+    isCollapse: false,
+    hasRoute: false,
+    menuList: [],
+    tabValue: 'Home',
+    tabs: [{
+        name: 'Home',
+        label: '首页',
+    }],
 }
 // 准备getters——用于将state中的数据进行加工
-const getters = {}
+const getters = {
+}
 
 //创建并暴露 store
-export default new Vuex.Store({
-  //actions: actions,
-  actions,
-  mutations,
-  state,
-  getters
-})
+    export default new Vuex.Store({
+        //actions: actions,
+        actions,
+        mutations,
+        state,
+        getters
+    })

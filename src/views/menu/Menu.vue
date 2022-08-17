@@ -13,7 +13,7 @@
           fit
           border
           :stripe="true"
-          max-height=520
+          max-height=500
           :header-cell-style="{background: '#ddd'}"
           @selection-change="handleSelectionChange"
           row-key="menuId"
