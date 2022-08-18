@@ -1,8 +1,10 @@
-// export default {
+// export const menuList = {
 //     methods: {
-//         hasAuth(permission) {
-//             var permissionList = this.$store.state.menu.permissionList
-//             return permissionList.indexOf(permission) > -1
-//         }
+//         getMenuList() {
+//             console.log(11)
+//             this.$axios.get('/fanBlog/menu/queryAllMenu').then(res => {
+//                 this.$store.state.menuList = res.data.data;
+//             });
+//         },
 //     }
 // }

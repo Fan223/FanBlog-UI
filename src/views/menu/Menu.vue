@@ -2,9 +2,14 @@
   <div class="mainContainer">
     <div class="mainHeader">
       <h1>菜单管理</h1>
-      <el-button @click="$bus.$emit('addMenu', menuList)" type="primary"
-                 size="medium" style="margin-right: 20px; margin-bottom: -10px">新增</el-button>
-      <MenuAdd/>
+      <div style="margin-right: 20px; margin-bottom: -10px">
+        <el-button @click="$bus.$emit('addMenu', menuList)" type="primary"
+                   size="small" style="margin-right: 20px;">新增</el-button>
+        <el-button type="danger" size="small" @click="deleteMenu" style="margin-left: -10px">
+          删除选中
+        </el-button>
+        <MenuAdd/>
+      </div>
     </div>
     <div style="padding-left: 40px; padding-right: 40px">
       <el-table
@@ -26,8 +31,7 @@
         </el-table-column>
         <el-table-column
             prop="menuName"
-            label="菜单名称"
-            width="120">
+            label="菜单名称">
         </el-table-column>
         <el-table-column
             prop="path"
@@ -93,7 +97,8 @@
         <el-table-column
             prop="createTime"
             label="创建时间"
-            align="center">
+            align="center"
+            width="200">
         </el-table-column>
         <el-table-column label="操作" width="150" fixed="right" align="center">
           <template slot-scope="scope">
@@ -144,7 +149,14 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$axios.delete('/fanBlog/menu/deleteMenu', {data: row}).then(res => {
+        let idList = [];
+        if (row.menuId) {
+          idList.push(row.menuId)
+        } else {
+          idList = this.multipleSelection.map(value => value.menuId);
+        }
+
+        this.$axios.delete('/fanBlog/menu/deleteMenu', {data: idList}).then(res => {
           if (res.data.code === 200) {
             this.$message.success("删除成功");
             this.getMenuList();

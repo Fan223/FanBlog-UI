@@ -1,17 +1,16 @@
 <template>
   <div>
-    <div class="mainContainer">
+    <div class="mainContainer" style="min-width: 780px;">
       <el-form
           :inline="true"
           size="medium"
           :model="searchForm"
           ref="searchForm"
-          class="demo-form-inline"
-          @submit.native.prevent="getBlogList"
+          @keyup.enter.native="getBlogList"
       >
         <el-form-item
             label="标题"
-            prop="roleName"
+            prop="title"
         >
           <el-input
               v-model="searchForm.title"
@@ -20,8 +19,18 @@
           >
           </el-input>
         </el-form-item>
+        <el-form-item label="分类" prop="category">
+          <el-select v-model="searchForm.category" clearable placeholder="请选择" style="line-height: 60px">
+            <el-option
+                v-for="item in categoryList"
+                :key="item.menuId"
+                :label="item.menuName"
+                :value="item.menuId">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
-          <div style="line-height: 60px">
+          <div style="line-height: 60px; margin-left: 20px">
             <el-button
                 size="small"
                 type="primary"
@@ -41,11 +50,15 @@
     <div class="mainContainer">
       <div class="mainHeader">
         <h1>博客管理</h1>
-        <router-link to="/blog/add">
-          <el-button type="primary" size="medium"
-                     style="margin-right: 20px; margin-bottom: -10px">新增
+        <div style="margin-right: 20px; margin-bottom: -10px">
+          <router-link to="/blog/add">
+            <el-button type="primary" size="small" style="margin-right: 10px">新增
+            </el-button>
+          </router-link>
+          <el-button type="danger" size="small" @click="deleteBlog">
+            删除选中
           </el-button>
-        </router-link>
+        </div>
       </div>
       <div style="padding-left: 40px; padding-right: 40px">
         <el-table
@@ -114,15 +127,12 @@ export default {
     return {
       searchForm: {
         title: '',
+        category: '',
       },
+      categoryList: [],
       blogList: [],
       multipleSelection: [],
-      pagination: {
-        total: '',
-        size: '5',
-        current: '1',
-        pages: ''
-      }
+      pagination: {}
     }
   },
   methods: {
@@ -141,6 +151,7 @@ export default {
       this.$axios.get('/fanBlog/blog/queryBlog', {
         params: {
           title: this.searchForm.title,
+          category: this.searchForm.category,
           current: this.pagination.current,
           size: this.pagination.size
         }
@@ -158,7 +169,14 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$axios.delete('/fanBlog/blog/deleteBlog', {data: row}).then(res => {
+        let idList = [];
+        if (row.blogId) {
+          idList.push(row.blogId)
+        } else {
+          idList = this.multipleSelection.map(value => value.blogId);
+        }
+
+        this.$axios.delete('/fanBlog/blog/deleteBlog', {data: idList}).then(res => {
           if (res.data.code == 200) {
             this.$message.success('删除成功');
             this.getBlogList();
@@ -186,10 +204,16 @@ export default {
           content: row.content
         }
       })
+    },
+    getCategory() {
+      this.$axios.get('/fanBlog/menu/getCategory').then(res => {
+        this.categoryList = res.data.data;
+      });
     }
   },
   created() {
     this.getBlogList();
+    this.getCategory();
   },
 }
 </script>
