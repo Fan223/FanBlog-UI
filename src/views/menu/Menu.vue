@@ -11,14 +11,14 @@
         <MenuAdd/>
       </div>
     </div>
-    <div style="padding-left: 40px; padding-right: 40px">
+    <div style="padding-left: 40px; padding-right: 40px;">
       <el-table
           ref="menuList"
           :data="menuList"
           fit
           border
           :stripe="true"
-          max-height=500
+          max-height=520
           :header-cell-style="{background: '#ddd'}"
           @selection-change="handleSelectionChange"
           row-key="menuId"
@@ -54,7 +54,7 @@
         <el-table-column
             prop="type"
             label="菜单类型"
-            width="80"
+            width="70"
             align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.type === 1" size="small" effect="dark">
@@ -71,19 +71,19 @@
         <el-table-column
             prop="icon"
             label="菜单图标"
-            width="130"
+            width="100"
             align="center">
         </el-table-column>
         <el-table-column
             prop="orderNum"
             label="排序号"
-            width="70"
+            width="50"
             align="center">
         </el-table-column>
         <el-table-column
             prop="valiFlag"
             label="状态"
-            width="80"
+            width="70"
             align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.valiFlag === 0" size="small" effect="dark" type="danger">
@@ -98,7 +98,7 @@
             prop="createTime"
             label="创建时间"
             align="center"
-            width="200">
+            width="160">
         </el-table-column>
         <el-table-column label="操作" width="150" fixed="right" align="center">
           <template slot-scope="scope">
@@ -186,6 +186,6 @@ export default {
 
 <style scoped>
 .el-table {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 </style>

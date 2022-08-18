@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mainContainer" style="min-width: 780px;">
+    <div class="mainContainer">
       <el-form
           :inline="true"
           size="medium"
@@ -227,6 +227,7 @@ export default {
   height: 60px;
   line-height: 60px;
   padding-left: 20px;
+  min-width: 740px;
 }
 ::v-deep .el-form-item__label {
   font-weight: bold;

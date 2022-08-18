@@ -60,27 +60,25 @@ export default {
   name: 'NavAside',
   computed: {
     menuList() {
-      // return this.$store.state.menuList;
-      let navMenuList = this.$store.state.menuList.map(menu => {
-        if (menu.valiFlag === 1) {
-          // let navMenu = {}
-          // navMenu = menu;
-          if (menu.children.length !== 0) {
-            // console.log(menu.children)
-            menu.children = menu.children.map(child => {
-              if (child.valiFlag === 1) {
-                return child;
-              }
-            })
-            return menu
-          }
-          // console.log(menu.children)
-          // navMenuList.push(navMenu);
-
-        }
-      })
-      console.log(navMenuList)
-     return navMenuList;
+      return this.$store.state.menuList;
+      // let navMenuList = [];
+      // this.$store.state.menuList.map(menu => {
+      //   if (menu.valiFlag === 1) {
+      //     if (menu.children.length > 0) {
+      //       let navMenu = menu;
+      //       let children = [];
+      //
+      //       menu.children = menu.children.map(child => {
+      //         if (child.valiFlag === 1) {
+      //           children.push(child);
+      //         }
+      //       })
+      //       navMenu.children = children;
+      //       navMenuList.push(navMenu);
+      //     }
+      //   }
+      // })
+      // return navMenuList;
     }
   },
 }
@@ -91,9 +89,11 @@ export default {
   width: 200px;
   border: none;
 }
+
 .el-menu-vertical-demo {
   border: none;
 }
+
 a {
   text-decoration: none;
 }
