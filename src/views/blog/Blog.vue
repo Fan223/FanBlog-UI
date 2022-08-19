@@ -67,7 +67,7 @@
             fit
             border
             :stripe="true"
-            max-height=420
+            max-height=450
             :header-cell-style="{background: '#ddd'}"
             @selection-change="handleSelectionChange"
             row-key="blogId"

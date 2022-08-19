@@ -4,7 +4,8 @@
       <h1>菜单管理</h1>
       <div style="margin-right: 20px; margin-bottom: -10px">
         <el-button @click="$bus.$emit('addMenu', menuList)" type="primary"
-                   size="small" style="margin-right: 20px;">新增</el-button>
+                   size="small" style="margin-right: 20px;">新增
+        </el-button>
         <el-button type="danger" size="small" @click="deleteMenu" style="margin-left: -10px">
           删除选中
         </el-button>
@@ -16,9 +17,9 @@
           ref="menuList"
           :data="menuList"
           fit
+          max-height=550
           border
           :stripe="true"
-          max-height=520
           :header-cell-style="{background: '#ddd'}"
           @selection-change="handleSelectionChange"
           row-key="menuId"
@@ -100,7 +101,7 @@
             align="center"
             width="160">
         </el-table-column>
-        <el-table-column label="操作" width="150" fixed="right" align="center">
+        <el-table-column label="操作" width="170" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button @click="$bus.$emit('editMenu', scope.row, menuList)" type="primary" size="mini">
               编辑
@@ -114,7 +115,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <MenuEdit />
+    <MenuEdit/>
   </div>
 
 </template>

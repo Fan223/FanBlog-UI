@@ -22,16 +22,16 @@
     </router-link>
 
     <template v-for="menu in menuList">
-      <el-submenu v-if="menu.children && menu.children.length > 0"
+      <el-submenu v-if="menu.children && menu.children.length > 0 && menu.valiFlag === 1"
                   :key="menu.menuId"
                   :index="menu.menuId">
         <template slot="title">
-          <i :class=menu.icon></i>
+          <i :class="menu.icon"></i>
           <span slot="title"> {{ menu.menuName }} </span>
         </template>
 
         <template v-for="child in menu.children">
-          <router-link :to="{
+          <router-link v-if="child.valiFlag === 1" :to="{
             name: child.menuName,
             params: {
               menuId: child.menuId
@@ -45,7 +45,7 @@
         </template>
       </el-submenu>
 
-      <router-link v-else :to="menu.path" :key="menu.menuId">
+      <router-link v-else-if="menu.valiFlag === 1" :to="menu.path" :key="menu.menuId">
         <el-menu-item :index="menu.menuId">
           <i :class=menu.icon></i>
           <span slot="title"> {{ menu.menuName }} </span>
@@ -60,25 +60,8 @@ export default {
   name: 'NavAside',
   computed: {
     menuList() {
+      
       return this.$store.state.menuList;
-      // let navMenuList = [];
-      // this.$store.state.menuList.map(menu => {
-      //   if (menu.valiFlag === 1) {
-      //     if (menu.children.length > 0) {
-      //       let navMenu = menu;
-      //       let children = [];
-      //
-      //       menu.children = menu.children.map(child => {
-      //         if (child.valiFlag === 1) {
-      //           children.push(child);
-      //         }
-      //       })
-      //       navMenu.children = children;
-      //       navMenuList.push(navMenu);
-      //     }
-      //   }
-      // })
-      // return navMenuList;
     }
   },
 }

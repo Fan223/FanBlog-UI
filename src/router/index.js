@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
 
                 // 动态绑定路由
                 res.data.data.forEach(menu => {
-                    if (menu.children) {
+                    if (menu.children && menu.children.length > 0) {
                         // 如果有子菜单，则动态绑定子菜单的路由
                         menu.children.forEach(child => {
                             let route = menuToRouter(child);

@@ -49,7 +49,7 @@ export default {
         }
       })
     }
-    this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=ade50d1a-ce21-45f8-9c24-e3e64478d717')
+    this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=a1a82f69-a5c4-454b-a333-7c3cc46842bc')
         .then(res => {
           console.log(res)
           Vditor.preview(document.getElementById('preview'),
