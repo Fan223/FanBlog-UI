@@ -16,9 +16,13 @@ export default {
       contentEditor: '',
     }
   },
-  mounted() {
-    this.createVditor();
-  },
+  // mounted() {
+  //   if (this.$store.state.vditorFlag) {
+  //     console.log(11)
+  //     this.createVditor("加载中");
+  //     this.$store.state.vditorFlag = false;
+  //   }
+  // },
   props: {
     flag: {
       type: String,

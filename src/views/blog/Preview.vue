@@ -23,18 +23,28 @@ export default {
       },
     }
   },
+  methods: {
+    setBlog(blogId, content) {
+      this.$refs.markdownEditor.createVditor(content);
+      this.editForm.content = content;
+      this.editForm.blogId = blogId;
+      localStorage.setItem('content', content);
+    }
+  },
   watch: {
     $route: {
       handler() {
         if (this.$route.params.menuId) {
-          this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.params.menuId).then(res => {
-            if (res.data.code == 200) {
-              this.$refs.markdownEditor.createVditor(res.data.data.content);
-              this.editForm.content = res.data.data.content;
-              this.editForm.blogId = this.$route.params.menuId;
-              localStorage.setItem('content', this.editForm.content);
-            }
-          });
+          if (this.$store.state.blogs.has(this.$route.params.menuId)) {
+            this.setBlog(this.$route.params.menuId, this.$store.state.blogs.get(this.$route.params.menuId))
+          } else {
+            this.$axios.get('/fanBlog/blog/queryBlogByMenuId?menuId=' + this.$route.params.menuId).then(res => {
+              if (res.data.code == 200) {
+                this.setBlog(res.data.data.blogId, res.data.data.content)
+                this.$store.state.blogs.set(res.data.data.blogId, res.data.data.content)
+              }
+            });
+          }
         } else {
           this.editForm.content = localStorage.getItem('content');
           this.editForm.blogId = JSON.parse(localStorage.getItem('tab')).menuId;

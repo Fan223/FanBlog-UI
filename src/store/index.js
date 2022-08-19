@@ -32,6 +32,8 @@ const state = {
         name: 'Home',
         label: '首页',
     }],
+    blogs: new Map([]),
+    // vditorFlag: true
 }
 // 准备getters——用于将state中的数据进行加工
 const getters = {
