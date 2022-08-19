@@ -25,7 +25,10 @@ export default {
   },
   methods: {
     setBlog(blogId, content) {
-      this.$refs.markdownEditor.createVditor(content);
+      this.$nextTick(() => {
+        this.$refs.markdownEditor.createVditor(content);
+      })
+
       this.editForm.content = content;
       this.editForm.blogId = blogId;
       localStorage.setItem('content', content);

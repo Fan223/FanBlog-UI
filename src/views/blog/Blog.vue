@@ -51,7 +51,12 @@
       <div class="mainHeader">
         <h1>博客管理</h1>
         <div style="margin-right: 20px; margin-bottom: -10px">
-          <router-link to="/blog/add">
+          <router-link :to="{
+            name: 'AddBlog',
+            params: {
+              flag: 'save'
+            }
+          }">
             <el-button type="primary" size="small" style="margin-right: 10px">新增
             </el-button>
           </router-link>

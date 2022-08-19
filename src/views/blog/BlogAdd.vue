@@ -67,6 +67,7 @@ export default {
       this.editForm.content = this.$refs.markdownEditor.getValue();
       this.$axios.post('/fanBlog/blog/saveBlog', this.editForm).then(res => {
         if (res.data.code == 200) {
+          console.log(res)
           this.$message.success('保存成功');
           this.editForm = res.data.data;
           this.$store.state.hasRoute = false;
@@ -77,9 +78,12 @@ export default {
     });
 
     if (this.$route.params.flag) {
-      this.editForm.blogId = this.$route.params.blogId;
-      this.editForm.title = this.$route.params.title;
-      this.editForm.content = this.$route.params.content;
+      if (this.$route.params.flag === 'edit') {
+        this.editForm.blogId = this.$route.params.blogId;
+        this.editForm.title = this.$route.params.title;
+        this.editForm.content = this.$route.params.content;
+      }
+
       this.$refs.markdownEditor.createVditor(this.editForm.content);
     }
   },
