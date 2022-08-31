@@ -9,13 +9,13 @@ const request = axios.create({
     },
 });
 
-// request.interceptors.request.use(config => {
-//     if (localStorage.getItem("token")) {
-//         // 请求头带上 token
-//         config.headers.Authorization = localStorage.getItem("jwt");
-//     }
-//     return config;
-// });
+request.interceptors.request.use(config => {
+    if (localStorage.getItem("jwt")) {
+        // 请求头带上 token
+        config.headers.Authorization = localStorage.getItem("jwt");
+    }
+    return config;
+});
 
 request.interceptors.response.use(response => {
     let res = response.data;
