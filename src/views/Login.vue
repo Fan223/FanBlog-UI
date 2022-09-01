@@ -104,10 +104,9 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.$axios.post('/fanBlog/login', this.loginForm).then((res) => {
-            console.log(res)
             if (res.data.data) {
               this.$message.success('登录成功');
-              localStorage.setItem("jwt", res.data.data.jwt);
+              localStorage.setItem("userInfo", JSON.stringify(res.data.data));
               this.$router.push('/home');
             } else {
               this.getCaptcha();

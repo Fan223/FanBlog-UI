@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import axios from '../axios'
 // 引入 Vuex
 import store from '../store'
+import ElementUI from "element-ui";
 
 // 创建 router 实例对象（路由器），去管理一组一组的路由规则，并暴露出去
 const router = new VueRouter({
@@ -24,7 +25,6 @@ const router = new VueRouter({
             path: '/',
             name: 'Main',
             component: () => import('@/layout/Main.vue'),
-            redirect: '/home',
             children: [
                 {
                     path: '/home',
@@ -42,44 +42,54 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    let hasRoute = store.state.hasRoute
+        let hasRoute = store.state.hasRoute
+        if (to.path === '/login') {
+            next();
+        } else if (!JSON.parse(localStorage.getItem("userInfo"))) {
+            ElementUI.Message.error("授权失败，请重新登录！")
+            localStorage.clear();
+            store.state.tabs = [{
+                name: 'Home',
+                label: '首页',
+            }]
+            next('/login');
+        } else if (!hasRoute) {
+            axios.get('/fanBlog/menu/queryAllMenu').then(res => {
+                if (res.data.code === 200) {
+                    // store.commit('SET_MENU_LIST', res.data.data)
+                    store.state.menuList = res.data.data
+                    store.state.hasRoute = true;
 
-    if (!hasRoute) {
-        axios.get('/fanBlog/menu/queryAllMenu').then(res => {
-            if (res.data.code === 200) {
-                // store.commit('SET_MENU_LIST', res.data.data)
-                store.state.menuList = res.data.data
-                store.state.hasRoute = true;
-
-                // 动态绑定路由
-                res.data.data.forEach(menu => {
-                    if (menu.children && menu.children.length > 0) {
-                        // 如果有子菜单，则动态绑定子菜单的路由
-                        menu.children.forEach(child => {
-                            let route = menuToRouter(child);
+                    // 动态绑定路由
+                    res.data.data.forEach(menu => {
+                        if (menu.children && menu.children.length > 0) {
+                            // 如果有子菜单，则动态绑定子菜单的路由
+                            menu.children.forEach(child => {
+                                let route = menuToRouter(child);
+                                if (route) {
+                                    if (router.getRoutes().findIndex(item => item.name === route.name) === -1) {
+                                        router.addRoute("Main", route);
+                                    }
+                                }
+                            })
+                        } else {
+                            // 没有子菜单，直接动态绑定路由
+                            let route = menuToRouter(menu);
                             if (route) {
                                 if (router.getRoutes().findIndex(item => item.name === route.name) === -1) {
                                     router.addRoute("Main", route);
                                 }
                             }
-                        })
-                    } else {
-                        // 没有子菜单，直接动态绑定路由
-                        let route = menuToRouter(menu);
-                        if (route) {
-                            if (router.getRoutes().findIndex(item => item.name === route.name) === -1) {
-                                router.addRoute("Main", route);
-                            }
                         }
-                    }
-                })
-                next(to.path)
-            }
-        })
-    } else {
-        next()
+                    })
+                    next(to.path)
+                }
+            })
+        } else {
+            next()
+        }
     }
-})
+)
 
 const menuToRouter = menu => {
     if (!menu.component) {
